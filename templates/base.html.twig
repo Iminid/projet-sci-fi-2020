@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Sci-Fi Finder -{% block title %}{% endblock %}</title>
+
+    <!-- favicon -->
+    <link href="/img/favicon.png" rel=icon>
+
+    <!-- web-fonts -->
+    <link href='https://fonts.googleapis.com/css?family=Roboto:100,300,400,700,500' rel='stylesheet' type='text/css'>
+    <link href="https://fonts.googleapis.com/css?family=Old+Standard+TT" rel="stylesheet">
+
+    <!-- Bootstrap -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- font-awesome -->
+    <link href="/fonts/font-awesome/font-awesome.min.css" rel="stylesheet">
+    <!-- Mobile Menu Style -->
+    <link href="/css/mobile-menu.css" rel="stylesheet">
+
+    <!-- Owl carousel -->
+    <link href="/css/owl.carousel.css" rel="stylesheet">
+    <link href="/css/owl.theme.default.min.css" rel="stylesheet">
+    <!-- Theme Style -->
+    <link href="/css/style.css" rel="stylesheet">
+
+</head>
+
+    <body>
+
+        {% block header %}
+            <body id="page-top" data-spy="scroll" data-target=".navbar">
+    <div id="main-wrapper">
+        <!-- Page Preloader -->
+        <div id="preloader">
+            <div id="status">
+                <div class="status-mes"></div>
+            </div>
+        </div>
+        <!-- preloader -->
+
+        <div class="uc-mobile-menu-pusher">
+            <div class="content-wrapper">
+                <!--Bacground-->
+                <section id="header_section_wrapper" class="header_section_wrapper header_back">
+                    <div class="container">
+                        <div class="header-section">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="left_section">
+                                        <div class="social">
+                                            <a class="icons-sm fb-ic"><i class="fa fa-facebook"></i></a>
+                                            <!--Twitter-->
+                                            <a class="icons-sm tw-ic"><i class="fa fa-twitter"></i></a>
+                                            <!--Google +-->
+                                            <a class="icons-sm inst-ic"><i class="fa fa-instagram"> </i></a>
+                                            <!--Linkedin-->
+                                            <a class="icons-sm tmb-ic"><i class="fa fa-linkedin"> </i></a>
+                                            <!--Pinterest-->
+                                            <a class="icons-sm rss-ic"><i class="fa fa-rss"> </i></a>
+                                        </div>
+                                        <!-- Top Social Section -->
+                                    </div>
+                                    <!-- Left Header Section -->
+                                </div>
+                                <div class="col-md-4">
+                                    <a href="index.html">
+                                        <p class="logo">Sci-Fi Finder</p>
+                                    </a>
+                                    <!--<div class="logo">
+                        
+                                    <!-- Logo Section -->
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="right_section">
+                                        <ul class="nav navbar-nav">
+                                            <li><a href="admin/login.html">Se Connecter</a></li>
+                                            <li><a href="admin/registr.html">S'Enregistrer /</a></li>
+                                            <!--<li><a href="#">Admin</a></li>-->
+                                            <li class="dropdown">
+                                                <a class="dropdown-toggle" href="#" data-toggle="dropdown">Admin <strong class="caret"></strong></a>
+                                                <div class="dropdown-menu" style="padding: 15px; padding-bottom: 0px;">
+                                                    <form method="post" action="login" accept-charset="UTF-8">
+                                                        <input style="margin-bottom: 15px;" type="text" placeholder="Nom d'utilisateur" id="username" name="username">
+                                                        <input style="margin-bottom: 15px;" type="password" placeholder="Mot de passe" id="password" name="password">
+                                                        <input style="float: left; margin-right: 10px;" type="checkbox" name="remember-me" id="remember-me" value="1">
+                                                        <label class="string optional" for="user_remember_me"> Se souvenir de moi</label>
+                                                        <input class="btn btn-primary btn-block" type="submit" id="sign-in" value="Connexion">
+                                                        <label style="text-align:center;margin-top:5px"></label>
+                                                    </form>
+                                                </div>
+                                            </li>
+
+
+                                            <li class="dropdown lang">
+                                                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Fr <i class="fa fa-angle-down"></i></button>
+                                                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                                    <li><a href="#">EN</a></li>
+                                                    <li><a href="#">RU</a></li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                        <!-- Language Section -->
+
+                                    </div>
+                                    <!-- Right Header Section -->
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Header Section -->
+
+
+                        <div class="navigation-section">
+                            <nav class="navbar m-menu navbar-default">
+                                <div class="container">
+                                    <!-- Brand and toggle get grouped for better mobile display -->
+                                    <div class="navbar-header">
+                                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-1"><span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
+                                        </button>
+                                    </div>
+                                    <!-- Collect the nav links, forms, and other content for toggling -->
+                                    <div class="collapse navbar-collapse" id="#navbar-collapse-1">
+                                        <ul class="nav navbar-nav main-nav">
+                                            <li class="active"><a href="{{ path('homepage') }}">Accueil</a></li>
+                                            <li><a href="{{ path('films') }}">Films</a></li>
+                                            <li><a href="{{ path('series') }}">Séries</a></li>
+                                            <li><a href="{{ path('books') }}">Livres</a></li>
+
+
+                                        </ul>
+                                    </div>
+                                    <!-- .navbar-collapse -->
+                                </div>
+                                <!-- .container -->
+                            </nav>
+                            <!-- .nav -->
+                        </div>
+                        <!-- .navigation-section -->
+                    </div>
+                    <!-- .container -->
+                </section>
+                <!-- header_section_wrapper -->
+
+                <!--Search Bar-->
+                <section>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-12">
+        {% endblock %}
+
+        {% block message %}
+            <p class="message"> Vous connaissez une série, un film ou un livre qui n’est pas dans notre catalogue ? N’hésitez pas à en <a href="" id="raj">RAJOUTER !!! <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span></a></p>
+        {% endblock %}
+
+        {% block recherche %}
+            <div class="input-group" id="adv-search">
+                                    <input type="text" id="main-search" class="form-control" placeholder="Rechercher" />
+                                    <div class="input-group-btn">
+                                        <div class="btn-group" role="group">
+                                            <div class="dropdown dropdown-lg">
+                                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span></button>
+                                                <div class="dropdown-menu dropdown-menu-right" role="menu">
+                                                    <form class="form-horizontal" role="form">
+                                                        <div class="form-group">
+                                                            <label for="filter">Média</label>
+                                                            <select class="form-control">
+                                                                <option value="0" selected>Tous</option>
+                                                                <option value="1">Films</option>
+                                                                <option value="2">Séries</option>
+                                                                <option value="3">Livres</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="contain">Editeur/Producteur</label>
+                                                            <input class="form-control" type="text" />
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="contain">Acteur/Auteur</label>
+                                                            <input class="form-control" type="text" />
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="contain">Réalisateur</label>
+                                                            <input class="form-control" type="text" />
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="contain">Année</label>
+                                                            <input class="form-control" type="text" />
+                                                        </div>
+                                                        <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                            <button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+        {% endblock %}
+        
+        
+        {% block body %}{% endblock %}
+
+
+        {% block footer %}
+            <section id="footer_section" class="footer_section footer_back">
+
+
+                    <div class="footer_bottom_Section">
+                        <div class="container mb">
+                            <div class="row">
+                                <div class="footer">
+                                    <div class="col-sm-3">
+                                        <div class="social">
+                                            <a class="icons-sm fb-ic"><i class="fa fa-facebook"></i></a>
+                                            <!--Twitter-->
+                                            <a class="icons-sm tw-ic"><i class="fa fa-twitter"></i></a>
+                                            <!--Google +-->
+                                            <a class="icons-sm inst-ic"><i class="fa fa-instagram"> </i></a>
+                                            <!--Linkedin-->
+                                            <a class="icons-sm tmb-ic"><i class="fa fa-tumblr"> </i></a>
+                                            <!--Pinterest-->
+                                            <a class="icons-sm rss-ic"><i class="fa fa-rss"> </i></a>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <p>&copy; Copyright 2018-Sci-Fi Finder . Design by: <a href="https://mikhail.bes-webdeveloper-seraing.be/portfolio/">Mikhail Baranov</a> </p>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <p class="logo">Sci-Fi Finder</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <!-- #content-wrapper -->
+
+        </div>
+
+        <!-- .offcanvas-pusher -->
+
+        <a href="#" class="crunchify-top"><i class="fa fa-angle-up" aria-hidden="true"></i></a>
+
+        <div class="uc-mobile-menu uc-mobile-menu-effect">
+            <button type="button" class="close" aria-hidden="true" data-toggle="offcanvas" id="uc-mobile-menu-close-btn">&times;</button>
+            <div>
+                <div>
+                    <ul id="menu">
+                        <li class="active"><a href="index.html">Accueil</a></li>
+                        <li><a href="films.html">Films</a></li>
+                        <li><a href="series.html">Séries</a></li>
+                        <li><a href="books.html">Livres</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="">News</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+        {% endblock %}
+
+        
+
+
+                <!-- jquery Core-->
+            <script src="/js/jquery-2.1.4.min.js"></script>
+
+                <!-- Bootstrap -->
+            <script src="/js/bootstrap.min.js"></script>
+
+                <!-- Theme Menu -->
+            <script src="/js/mobile-menu.js"></script>
+
+                <!-- Owl carousel -->
+            <script src="/js/owl.carousel.min.js"></script>
+
+                <!-- Theme Script -->
+            <script src="/js/script.js"></script>
+        {% block javascripts %}{% endblock %}
+    </body>
+</html>
