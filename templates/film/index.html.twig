@@ -1,0 +1,85 @@
+{% extends "base.html.twig" %}
+{% block title %}
+	Films
+{% endblock %}
+{% block message %}{% endblock %}
+{% block body %}
+	<div class="container">
+		<div class="category_section films">
+			<div class="article_title header_pink">
+				<h2>
+					<a href="{{ path('films') }}" target="_self">FILMS</a>
+				</h2>
+			</div>
+			<div class="row-flex">
+				{% for film in films %}
+                    {% set url = path('films_show', {'slug': film.slug}) %}
+
+					<div class="col-md-4 marg" id="col-films">
+						<div class="category_article_body">
+							<div class="top_article_img">
+								<a href="{{ url }}" target="_self"><img class="img-responsive" src="{{ film.coverImage }}" alt="feature-top">
+								</a>
+							</div>
+							<!-- top_article_img -->
+
+							<span class="tag pink">
+								<a href="{{ path('films') }}" target="_self">FILMS</a>
+							</span>
+
+							<div class="category_article_title">
+								<h2>
+									<a href="{{ url }}" target="_self">{{ film.title }}
+									</a>
+								</h2>
+							</div>
+
+							<div class="entity_rating">
+								<i class="fa fa-star-half-full"></i>
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star"></i>
+							</div>
+							<!-- entity_rating -->
+							<div class="category_article_date">
+								<a href="#">23 Oct - 2018</a>, par:
+								<a href="#">Admin</a>
+							</div>
+							<!-- category_article_title -->
+							<div class="category_article_content">
+								{{ film.description }}
+							</div>
+							<!-- category_article_content -->
+							<div class="media_social">
+								<span>
+									<i class="fa fa-comments-o"></i>
+									<a href="#">4</a>
+									Commentaires</span>
+							</div>
+							<!-- media_social -->
+						</div>
+						<!-- category_article_body -->
+					</div>
+					<!-- col-md-6 -->
+				{% endfor %}
+				
+			</div>
+			<nav aria-label="Page navigation" class="pagination_section">
+                            <ul class="pagination">
+                                <li>
+                                    <a href="#" aria-label="Previous"> <span aria-hidden="true">&laquo;</span> </a>
+                                </li>
+                                <li><a href="#">1</a></li>
+                                <li><a href="#">2</a></li>
+                                <li><a href="#">3</a></li>
+                                <li><a href="#">4</a></li>
+                                <li><a href="#">5</a></li>
+                                <li>
+                                    <a href="#" aria-label="Next" class="active"> <span aria-hidden="true">&raquo;</span> </a>
+                                </li>
+                            </ul>
+                        </nav>
+                        <!-- navigation -->
+		</div>
+	{% endblock %}

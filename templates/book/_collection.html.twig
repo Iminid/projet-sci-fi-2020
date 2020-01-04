@@ -1,0 +1,97 @@
+{# Editeur #}
+{% block _book_editors_widget %}
+	<p class="label_big">Ici, vous pouvez ajouter les éditeurs !</p>
+	{{ form_widget(form) }}
+	<input type="hidden" id='widget-count' value="0">
+
+	<div class="form-group">
+		<button type="button" class="btn btn-primary" id="add-editor">+</button>
+	</div>
+{% endblock %}
+
+{% block _book_editors_entry_row %}
+	{{ form_widget(form) }}
+{% endblock %}
+
+{% block _book_editors_entry_widget %}
+	<div class="form-group" id="block_{{ id }}">
+		<div class="row-flex">
+			<div class="col-10">
+				<div class="row-flex">
+					<div class="col">
+						{{ form_widget(form.editorname) }}
+					</div>
+					<div class="col-2">
+						<button type="button" data-action="delete" data-target="#block_{{ id }}" class="btn btn-danger">X</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}
+
+{# Writers #}
+{% block _book_writers_widget %}
+	<p class="label_big">Ici, vous pouvez ajouter les écrivains !</p>
+	{{ form_widget(form) }}
+	<input type="hidden" id='widget-count' value="0">
+
+	<div class="form-group">
+		<button type="button" class="btn btn-primary" id="add-writer">+</button>
+	</div>
+{% endblock %}
+
+{% block _book_writers_entry_row %}
+	{{ form_widget(form) }}
+{% endblock %}
+
+{% block _book_writers_entry_widget %}
+	<div class="form-group" id="block_{{ id }}">
+		<div class="row-flex">
+			<div class="col-10">
+				<div class="row-flex">
+					<div class="col">
+						{{ form_widget(form.firstname) }}
+					</div>
+					<div class="col">
+						{{ form_widget(form.middlename) }}
+					</div>
+					<div class="col">
+						{{ form_widget(form.lastname) }}
+					</div>
+					<div class="col-2">
+						<button type="button" data-action="delete" data-target="#block_{{ id }}" class="btn btn-danger">X</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}
+
+{# Years #}
+{% block _book_years_widget %}
+	<p class="label_big">Ici, vous pouvez ajouter une année !</p>
+	{{ form_widget(form) }}
+    <input type="hidden" id='widget-count' value="0">
+
+	<div class="form-group">
+		<button type="button" class="btn btn-primary" id="add-year">+</button>
+	</div>
+{% endblock %}
+
+{% block _book_years_entry_row %}
+	{{ form_widget(form) }}
+{% endblock %}
+
+{% block _book_years_entry_widget %}
+	<div class="form-group" id="block_{{ id }}">
+		<div class="row-flex">
+			<div class="col">
+				{{ form_widget(form.date) }}
+			</div>
+			<div class="col-2">
+				<button type="button" data-action="delete" data-target="#block_{{ id }}" class="btn btn-danger">X</button>
+			</div>
+		</div>
+	</div>
+{% endblock %}

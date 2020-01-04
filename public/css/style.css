@@ -630,7 +630,7 @@ section {
 
 .dropdown:hover .dropdown-menu {
     display: block;
-    margin-top: 28px !important;
+    margin-top: 30px !important;
     opacity: 1;
     visibility: visible;
     -webkit-transform: translateY(0);
@@ -2052,6 +2052,11 @@ button.btn.btn-default.dropdown-toggle{
     height: 55px;
     width: 50px;
     color: #dd6978;
+    margin-top: 0px;
+}
+.top-lang{
+    height: 0px;
+    margin-top: -11px;
 }
 button.btn.btn-primary{
     width: 50px;
@@ -2067,3 +2072,34 @@ button.btn.btn-primary{
     color: #dd6978;
 }
 
+.category_article_body{
+    float: right;
+}
+/*#col-films{
+    height: auto;
+    overflow: auto;
+    min-height: 100% !important;
+    vertical-align: middle;
+}
+.category_article_content{
+    overflow: hidden;
+    height: 300px;
+
+}*/
+.row-flex{
+    display: flex;
+    flex-wrap: wrap;
+}
+.marg{
+    margin-top: 30px;
+}
+.real{
+    display: flex;
+    flex-wrap: wrap;
+}
+.label_big{
+    font-weight: bold;
+}
+.form-error-message{
+    color: red;
+}

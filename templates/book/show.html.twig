@@ -1,0 +1,226 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+	{{ book.title }}
+{% endblock %}
+{% block body %}
+
+	<section id="entity_section" class="entity_section">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="entity_wrapper">
+						<div class="entity_title">
+							<div class="entity_rating item">
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star-half-full"></i>
+							</div>
+							<!-- entity_rating -->
+							<h1>
+								<a href="#">{{ book.title }}</a>
+							</h1>
+						</div>
+						<!-- entity_title -->
+
+						<div class="entity_thumb">
+							<a href="#"><img class="img-responsive middle" src="{{ book.coverImage }}" alt="feature-top"></a>
+						</div>
+						<!-- entity_thumb -->
+
+						<div class="entity_content">
+							<p class="text_title">
+								{{ book.description }}
+							</p>
+
+							<div class="item_desc">Editeur(s) :</div>
+							<p class="real">
+								{% for editor in book.editors %}
+									{{ editor.editorname }}
+									{% if not loop.last %},
+									{% endif %}
+								{% endfor %}
+							</p>
+
+							<div class="item_desc">Auteur(s) :</div>
+							<p class="prod">
+							    {% for writer in book.writers %}
+									{{ writer.firstname }}
+									{{ writer.lastname }}
+									{% if not loop.last %},
+									{% endif %}
+								{% endfor %}
+							</p>
+							<div class="item_desc">Année :</div>
+							<p class="year">
+							    {% for year in book.years %}
+								{{ year.date|date("Y")}} 
+								{% if not loop.last %},{% endif %}
+								{% endfor %}
+							</p>
+							<div class="item_desc">Pages :</div>
+							<p class="countr">
+							      {{ book.pages }} 
+							</p>
+
+						</div>
+						<!-- entity_content -->
+
+						<div class="entity_footer">
+							<button type="button" class="btn btn-secondary">
+								<a href="{{ path('films') }}">
+									<i class="fa fa-angle-double-left"></i>
+								</a>
+							</button>
+
+							<div class="entity_social">
+								<span>
+									<i class="fa fa-comments-o"></i>4
+									<a href="#">Commentaires</a>
+								</span>
+							</div>
+							<!-- entity_social -->
+
+						</div>
+						<!-- entity_footer -->
+
+					</div>
+					<!-- entity_wrapper -->
+
+
+					<div class="readers_comment">
+						<div class="entity_inner__title header_purple">
+							<h2>Commentaires</h2>
+						</div>
+						<!-- entity_title -->
+
+						<div class="media">
+							<div class="media-left">
+								<a href="#">
+									<img alt="64x64" class="media-object" data-src="assets/img/reader_img1.jpg" src="assets/img/reader_img1.jpg" data-holder-rendered="true">
+								</a>
+							</div>
+							<div class="media-body">
+								<h2 class="media-heading">
+									<a href="#">Josh Ryan</a>
+								</h2>
+								But who has any right to find fault with a man who chooses to enjoy a pleasure that has
+																                                            no annoying consequences, or one who avoids a pain that produces no resultant pleasure?
+
+								<div class="entity_vote">
+									<a href="#">
+										<i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
+									</a>
+									<a href="#">
+										<i class="fa fa-thumbs-o-down" aria-hidden="true"></i>
+									</a>
+									<a href="#">
+										<span class="reply_ic">Répondre
+										</span>
+									</a>
+								</div>
+								<div class="media">
+									<div class="media-left">
+										<a href="#">
+											<img alt="64x64" class="media-object" data-src="assets/img/reader_img2.jpg" src="assets/img/reader_img2.jpg" data-holder-rendered="true">
+										</a>
+									</div>
+									<div class="media-body">
+										<h2 class="media-heading">
+											<a href="#">Admin</a>
+										</h2>
+										But who has any right to find fault with a man who chooses to enjoy a pleasure
+																				                                                    that has no annoying consequences, or one who avoids a pain that produces no
+																				                                                    resultant pleasure?
+
+										<div class="entity_vote">
+											<a href="#">
+												<i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
+											</a>
+											<a href="#">
+												<i class="fa fa-thumbs-o-down" aria-hidden="true"></i>
+											</a>
+											<a href="#">
+												<span class="reply_ic">Répondre
+												</span>
+											</a>
+										</div>
+									</div>
+								</div>
+							</div>
+
+						</div>
+						<!-- media end -->
+
+						<div class="media">
+							<div class="media-left">
+								<a href="#">
+									<img alt="64x64" class="media-object" data-src="assets/img/reader_img3.jpg" src="assets/img/reader_img3.jpg" data-holder-rendered="true">
+								</a>
+							</div>
+							<div class="media-body">
+								<h2 class="media-heading">
+									<a href="#">Philip Joshep</a>
+								</h2>
+								But who has any right to find fault with a man who chooses to enjoy a pleasure that has
+																                                            no annoying consequences, or one who avoids a pain that produces no resultant pleasure?
+
+								<div class="entity_vote">
+									<a href="#">
+										<i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
+									</a>
+									<a href="#">
+										<i class="fa fa-thumbs-o-down" aria-hidden="true"></i>
+									</a>
+									<a href="#">
+										<span class="reply_ic">Répondre
+										</span>
+									</a>
+								</div>
+							</div>
+						</div>
+						<!-- media end -->
+					</div>
+					<!--Readers Comment-->
+
+
+					<div class="entity_comments">
+						<h2>Poster un commentaire</h2>
+						<!--Entity Title -->
+
+						<div class="entity_comment_from">
+							<form>
+								<div class="form-group comment">
+									<textarea class="form-control" id="inputComment" placeholder="Comment"></textarea>
+								</div>
+
+								<button type="submit" class="btn btn-submit red">Envoyer</button>
+							</form>
+						</div>
+						<!--Entity Comments From -->
+						<!--LOGIN AND REGISTRY -->
+
+						<a class="connec" href="admin/registr.html">
+							<p>Pas encore enregistré ?</p>
+						</a>
+						<a class="connec" href="admin/login.html">
+							<p>Se connecter</p>
+						</a>
+
+					</div>
+					<!--Entity Comments -->
+
+				</div>
+				<!--Left Section-->
+
+
+			</div>
+			<!-- row -->
+
+		</div>
+		<!-- container -->
+
+	</section>
+	<!-- Entity Section Wrapper -->
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends "base.html.twig" %}
+{% block title %} Ajouter un film
+{% endblock %}
+{% form_theme form 'film/_collection.html.twig' %}
+{% block body %}
+	<div class="container">
+		<h1>Ajouter un film dans le catalogue</h1>
+
+		{{ form_start(form) }}
+
+		{{ form_widget(form) }}
+
+		<button type="submit" class="btn btn-primary">Ajouter un film</button>
+
+		{{ form_end(form) }}
+	</div>
+{% endblock %}
+
+

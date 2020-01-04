@@ -1,0 +1,88 @@
+{% extends "base.html.twig" %}
+{% block title %}
+	Livres
+{% endblock %}
+{% block message %}{% endblock %}
+{% block body %}
+	<div class="container">
+                    <div class="row">
+                        <div class="category_section livres">
+                            <div class="article_title header_orange">
+                                <h2><a href="{{ path('livres') }}" target="_self">LIVRES</a></h2>
+                            </div>
+                            <!-- article_title -->
+
+                            <div class="category_article_wrapper">
+                                <div class="row-flex">
+                                {% for book in books %}
+                                {% set url = path('books_show', {'slug': book.slug}) %}
+                                    <div class="col-md-5">
+                                        <div class="top_article_img">
+                                            <a href="{{ url }}" target="_self">
+                                                <img class="img-responsive middle" src="{{ book.coverImage }}" alt="feature-top">
+                                            </a>
+                                        </div>
+                                        <!-- top_article_img -->
+
+                                    </div>
+                                    <div class="col-md-7">
+                                        <span class="tag orange"><a href="{{ path('livres') }}" target="_self">LIVRES</a></span>
+
+                                        <div class="category_article_title">
+                                            <h2><a href="{{ url }}" target="_self">{{ book.title }}</a></h2>
+                                        </div>
+                                        <div class="entity_rating">
+                                            <i class="fa fa-star-half-full"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                        </div>
+                                        <div class="category_article_date"><a href="#">23 Oct - 2018</a>, par: <a href="#">Admin</a></div>
+                                        <!-- category_article_title -->
+
+                                        <div class="category_article_content">
+                                            {{ book.description }}
+                                        </div>
+                                        <!-- category_article_content -->
+
+                                        <div class="media_social">
+                                            <span><i class="fa fa-comments-o"></i><a href="#">4</a> Commentaires</span>
+                                        </div>
+                                        <!-- media_social -->
+
+                                    </div>
+                                    <!-- col-md-7 -->
+                                     {% endfor %}
+                                </div>
+                                <!-- row -->
+
+                            </div>
+                            <!-- category_article_wrapper -->
+
+                        </div>
+
+
+                        <nav aria-label="Page navigation" class="pagination_section">
+                            <ul class="pagination">
+                                <li>
+                                    <a href="#" aria-label="Previous"> <span aria-hidden="true">&laquo;</span> </a>
+                                </li>
+                                <li><a href="#">1</a></li>
+                                <li><a href="#">2</a></li>
+                                <li><a href="#">3</a></li>
+                                <li><a href="#">4</a></li>
+                                <li><a href="#">5</a></li>
+                                <li>
+                                    <a href="#" aria-label="Next" class="active"> <span aria-hidden="true">&raquo;</span> </a>
+                                </li>
+                            </ul>
+                        </nav>
+                        <!-- navigation -->
+
+                    </div>
+                    <!-- row -->
+
+                </div>
+                <!-- container -->
+{% endblock %}

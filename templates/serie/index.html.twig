@@ -1,0 +1,75 @@
+{% extends "base.html.twig" %}
+{% block title %}
+	Séries
+{% endblock %}
+{% block body %}
+	<div class="container">
+
+		<div class="category_section series">
+			<div class="article_title header_blue">
+				<h2>
+					<a href="{{ path('series') }}" target="_self">SERIES</a>
+				</h2>
+			</div>
+		</div>
+		<div class="row-flex">
+			{% for serie in series %}
+            {% set url = path('series_show', {'slug': serie.slug}) %}
+				<div class="col-md-6 marg">
+					<div class="category_article_body">
+						<div class="top_article_img">
+							<a href="{{ url }}" target="_self">
+								<img class="img-responsive" src="{{ serie.coverImage }}" alt="feature-top">
+							</a>
+						</div>
+						<!-- top_article_img -->
+
+						<span class="tag blue">
+							<a href="{{ path('series') }}" target="_self">SERIES</a>
+						</span>
+
+						<div class="category_article_title">
+							<h2>
+								<a href="{{ url }}" target="_self">{{ serie.title }}
+								</a>
+							</h2>
+						</div>
+						<div class="entity_rating">
+							<i class="fa fa-star-half-full"></i>
+							<i class="fa fa-star"></i>
+							<i class="fa fa-star"></i>
+							<i class="fa fa-star"></i>
+							<i class="fa fa-star"></i>
+
+						</div>
+						<div class="category_article_date">
+							<a href="#">23 Oct - 2018</a>, par:
+							<a href="#">Admin</a>
+						</div>
+						<!-- category_article_title -->
+
+
+						<div class="category_article_content">
+							{{ serie.description }}
+						</div>
+						<!-- category_article_content -->
+
+						<div class="media_social">
+							<span>
+								<i class="fa fa-comments-o"></i>
+								<a href="#">4</a>
+								Commentaires</span>
+						</div>
+						<!-- media_social -->
+
+					</div>
+					<!-- category_article_body -->
+
+				</div>
+				<!-- col-md-6 -->
+			{% endfor %}
+		</div>
+
+	</div>
+
+{% endblock %}

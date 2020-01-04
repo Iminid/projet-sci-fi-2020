@@ -116,3 +116,59 @@ $(document).ready(function () {
         e.stopPropagation();
     });
 });*/
+
+/*Formulaires*/
+$('#add-person, #add-editor').click(function(){
+    const index = +$('#widget-count').val();
+    const tmpl = $('#film_persons, #serie_persons, #book_editors').data('prototype').replace(/__name__/g, index);
+    $('#film_persons, #serie_persons, #book_editors').append(tmpl);
+    $('#widget-count').val(index +1);
+    DeleteButtons();
+});
+
+$('#add-autor, #add-writer').click(function(){
+    const index = +$('#widget-count').val();
+    const tmpl = $('#film_autors, #serie_autors, #book_writers').data('prototype').replace(/__name__/g, index);
+    $('#film_autors, #serie_autors, #book_writers').append(tmpl);
+    $('#widget-count').val(index +1);
+    DeleteButtons();
+});
+
+$('#add-actor').click(function(){
+    const index = +$('#widget-count').val();
+    const tmpl = $('#film_actors, #serie_actors').data('prototype').replace(/__name__/g, index);
+    $('#film_actors, #serie_actors').append(tmpl);
+    $('#widget-count').val(index +1);
+    DeleteButtons();
+});
+
+$('#add-country').click(function(){
+    const index = +$('#widget-count').val();
+    const tmpl = $('#film_country, #serie_country').data('prototype').replace(/__name__/g, index);
+    $('#film_country, #serie_country').append(tmpl);
+    $('#widget-count').val(index +1);
+    DeleteButtons();
+});
+
+$('#add-year').click(function(){
+    const index = +$('#widget-count').val();
+    const tmpl = $('#film_years, #serie_years, #book_years').data('prototype').replace(/__name__/g, index);
+    $('#film_years, #serie_years, #book_years').append(tmpl);
+    $('#widget-count').val(index +1);
+    DeleteButtons();
+});
+
+function DeleteButtons(){
+    $('button[data-action="delete"]').click(function(){
+        const target = this.dataset.target;
+        $(target).remove();
+    });
+}
+function countUpdate(){
+    const count = +$('#film_persons div.form-group, #serie_persons div.form-groupe, #book_editors div.form-group, #book_writers div.form-group').length;
+    $('#widget-count').val(count);
+}
+countUpdate();
+DeleteButtons();
+
+
