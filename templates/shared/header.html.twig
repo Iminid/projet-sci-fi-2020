@@ -50,36 +50,61 @@
 											<p class="logo">Sci-Fi Finder</p>
 										</a>
 										<!--<div class="logo">
-										                        
-										                                    <!-- Logo Section -->
+																														                        
+																														                                    <!-- Logo Section -->
 									</div>
 									<div class="col-md-4">
 										<div class="right_section">
 											<ul class="nav navbar-nav">
-												<li>
-													<a href="admin/login.html">Se Connecter</a>
-												</li>
-												<li>
-													<a href="admin/registr.html">S'Enregistrer /</a>
-												</li>
-												<!--<li><a href="#">Admin</a></li>-->
-												<li class="dropdown">
-													<a class="dropdown-toggle" href="#" data-toggle="dropdown">Admin
-														<strong class="caret"></strong>
-													</a>
-													<div class="dropdown-menu" style="padding: 15px; padding-bottom: 0px;">
-														<form method="post" action="login" accept-charset="UTF-8">
-															<input style="margin-bottom: 15px;" type="text" placeholder="Nom d'utilisateur" id="username" name="username">
-															<input style="margin-bottom: 15px;" type="password" placeholder="Mot de passe" id="password" name="password">
-															<input style="float: left; margin-right: 10px;" type="checkbox" name="remember-me" id="remember-me" value="1">
-															<label class="string optional" for="user_remember_me">
-																Se souvenir de moi</label>
-															<input class="btn btn-primary btn-block" type="submit" id="sign-in" value="Connexion">
-															<label style="text-align:center;margin-top:5px"></label>
-														</form>
-													</div>
-												</li>
+												{% if app.user %}
+													<li class="dropdown">
+														<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" id="accdrop">
+															<img src="{{ app.user.avatar }}" class="picture picture-mini" alt="Avatar de {{ app.user.Name }}">
+															{{ app.user.Name }}
+															<i class="fa fa-angle-down"></i>
+														</a>
 
+														<ul class="dropdown-menu accmenu">
+														     
+															<li class="dropdown-second">
+																<a href="#" class="nav-link dropdown-toggle"
+																 data-toggle="dropdown">Ajouter
+																 <i class="fa fa-angle-down"></i></a>
+																
+																<ul class="dropdown-menu-second accmenu">
+														        
+																<li><a href="{{ path('films_add') }}">Un film</a></li>
+																<li><a href="{{ path('series_add') }}">Une série</a></li>
+																<li><a href="{{ path('livres_add') }}">Un livre</a></li>
+															    	
+																</ul>
+															</li>
+															
+
+															</li>
+															<li>
+																<a href="{{ path('account_home') }}">Mon compte</a>
+															</li>
+															<li>
+																<a href="{{ path('account_profile') }}">Modifier mon profile</a>
+															</li>
+															<li class="divider"></li>
+															<li>
+																<a href="{{ path('acc_logout') }}">Se déconnecter</a>
+															</li>
+														</ul>
+													</li>
+												{% else %}
+													<li>
+														<a href="{{ path('acc_login') }}">Se Connecter</a>
+													</li>
+													<li>
+														<a href="{{ path('acc_register') }}">S'Enregistrer
+														</a>
+													</li>
+												{% endif %}
+
+												<!--<li><a href="#">Admin</a></li>-->
 
 												<li class="dropdown lang top-lang">
 													<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Fr
@@ -131,7 +156,7 @@
 													<a href="{{ path('series') }}">Séries</a>
 												</li>
 												<li>
-													<a href="{{ path('books') }}">Livres</a>
+													<a href="{{ path('livres') }}">Livres</a>
 												</li>
 
 

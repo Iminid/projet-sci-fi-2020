@@ -68,11 +68,17 @@
 						<!-- entity_content -->
 
 						<div class="entity_footer">
+						{% set ba = book.author %}
 							<button type="button" class="btn btn-secondary">
 								<a href="{{ path('films') }}">
 									<i class="fa fa-angle-double-left"></i>
 								</a>
 							</button>
+
+							<p>Ajouté par : <a href="">
+								<img src="{{ ba.avatar }}" class="picture picture-show" alt="Avatar de 
+								{{ ba.Name}}">
+							</a> {{ ba.Name}} </p>
 
 							<div class="entity_social">
 								<span>

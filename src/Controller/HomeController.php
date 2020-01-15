@@ -20,18 +20,6 @@ class HomeController extends AbstractController{
         );
     }
     
-   
-
-    /*---LIVRESPAGE---*/
-    
-    /**
-     * @Route("/livres", name="books")
-     */
-    public function books(){
-        return $this->render(
-            'books.html.twig'
-        );
-    }
 }
 
 ?>

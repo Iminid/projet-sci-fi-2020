@@ -3,6 +3,7 @@
 namespace App\DataFixtures;
 
 use Faker\Factory;
+use App\Entity\User;
 use App\Entity\Year;
 use App\Entity\Actor;
 use App\Entity\Autor;
@@ -17,12 +18,43 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\HttpClient\Chunk\LastChunk;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class AppFixtures extends Fixture
 {
+    private $encoder;
+    public function __construct(UserPasswordEncoderInterface $encoder){
+        $this->encoder = $encoder;
+    }
+
     public function load(ObjectManager $manager)
     {
         $faker = Factory::create('fr-FR');
+
+        //===Users===//
+        $sexes = ['male', 'female'];
+        $users = [];
+        for ($i = 1; $i <= 10; $i ++){
+            $user = new User();
+            $sex = $faker->randomElement($sexes);
+            $avatarNum = $faker->numberBetween(1, 99) . '.jpg';
+            $avatar = 'https://randomuser.me/api/portraits/';
+            if($sex == 'male'){
+                $avatar = $avatar . 'men/' . $avatarNum;
+            }else{
+                $avatar = $avatar . 'women/' . $avatarNum;
+            } 
+            $pass = $this->encoder->encodePassword($user, 'password');
+            $user->setFirstName($faker->firstname($sex))
+                 ->setLastName($faker->lastname)
+                 ->setEmail($faker->email)
+                 ->setHash($pass)
+                 ->setAvatar($avatar);
+        $manager->persist($user);
+        $users[] = $user;
+
+        }
+
 
         //===Films Fixtures===//
         for ($i = 1; $i <= 30; $i++) {
@@ -33,10 +65,13 @@ class AppFixtures extends Fixture
             $coverImage = $faker->imageUrl(350, 200);
             $description = '<p>' . join('</p><p>', $faker->paragraphs(5)) . '</p>';
 
+            $user = $users[mt_rand(0, count($users) - 1)];
+
 
             $films->setTitle($title)
                 ->setCoverImage($coverImage)
-                ->setDescription($description);
+                ->setDescription($description)
+                ->setAuthor($user);
                 $manager->persist($films);
 
             //***Add Persons Films***//
@@ -141,7 +176,8 @@ class AppFixtures extends Fixture
             $series->setTitle($title)
                 ->setCoverImage($coverImage)
                 ->setDescription($description)
-                ->setSeasons(mt_rand(1, 1));
+                ->setSeasons(mt_rand(1, 1))
+                ->setAuthor($user);;
 
             //***Add Persons Series***//
             $persons = new ArrayCollection();
@@ -244,7 +280,8 @@ class AppFixtures extends Fixture
             $books->setTitle($title)
                 ->setCoverImage($coverImage)
                 ->setDescription($description)
-                ->setPages(mt_rand(50, 980));
+                ->setPages(mt_rand(50, 980))
+                ->setAuthor($user);;
                 $manager->persist($books);
 
 

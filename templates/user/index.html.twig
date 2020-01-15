@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ user.Name }}
+{% endblock %}
+
+{% block body %}
+
+	<div class="row">
+		<div class="col-md-offset-2 col-md-8 col-lg-offset-3 col-lg-6">
+			<div class="well profile">
+				<div class="col-sm-12">
+					<div class="col-xs-12 col-sm-8">
+						<h2>Mikhail Baranov</h2>
+						<p>
+							<strong>E-mail:
+							</strong>
+							{{ user.email }}
+						</p>
+						<p>
+							<strong>Films rajoutés:
+							</strong>
+							{{ user.films | length }}
+						</p>
+						<p>
+							<strong>Séries rajoutés:
+							</strong>
+							{{ user.series | length }}
+						</p>
+						<p>
+							<strong>Livres rajoutés:
+							</strong>
+							{{ user.books | length }}
+						</p>
+
+					</div>
+					<div class="col-xs-12 col-sm-4 text-center">
+						<figure>
+							<img src="{{ user.avatar }}" alt="Avatar de {{ user.Name }}" class="img-circle img-responsive">
+						</figure>
+					</div>
+				</div>
+				<div class="col-xs-12 divider text-center">
+				{% if user is same as(app.user) %}
+					<div class="col-xs-12 col-sm-6 emphasis">
+						<div class="two">
+							<a href="{{ path('account_profile') }}"><button class="btn btn-success btn-block">
+								Modifier mes informations</button></a>
+						</div>
+					</div>
+					<div class="col-xs-12 col-sm-6 emphasis">
+						<div class="two">
+							<a href="{{ path('pass_update') }}"><button class="btn btn-info btn-block">
+								Modifier mon mot de passe</button></a>
+						</div>
+					</div>
+					{% endif %}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>{% endblock %}

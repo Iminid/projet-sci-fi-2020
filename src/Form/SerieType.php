@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use App\Form\AppType;
 use App\Entity\Series;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -12,25 +13,8 @@ use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
-class SerieType extends AbstractType
+class SerieType extends AppType
 {
-     /**
-     * La config d'un champ !
-     *
-     * @param string $label
-     * @param array $options
-     * @param string $placeholder
-     * @return array
-     */
-    private function getConfig($label, $placeholder, $options = [])
-    {
-        return array_merge([
-            'label' => $label,
-            'attr' => [
-                'placeholder' => $placeholder
-            ]
-        ], $options);
-    }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {

@@ -69,6 +69,8 @@ class FilmController extends AbstractController
                 $manager->persist($year);
             }
 
+            $film->setAuthor($this->getUser());
+
             $manager->persist($film);
             $manager->flush();
 

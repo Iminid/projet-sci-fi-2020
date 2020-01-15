@@ -62,6 +62,8 @@ class SerieController extends AbstractController
                 $manager->persist($year);
             }
 
+            $serie->setAuthor($this->getUser());
+
             $manager->persist($serie);
             $manager->flush();
 

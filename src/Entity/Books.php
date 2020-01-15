@@ -71,6 +71,12 @@ class Books
      */
     private $years;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="books")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $author;
+
 
     public function __construct()
     {
@@ -235,6 +241,18 @@ class Books
         if ($this->years->contains($year)) {
             $this->years->removeElement($year);
         }
+
+        return $this;
+    }
+
+    public function getAuthor(): ?User
+    {
+        return $this->author;
+    }
+
+    public function setAuthor(?User $author): self
+    {
+        $this->author = $author;
 
         return $this;
     }

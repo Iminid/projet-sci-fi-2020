@@ -374,12 +374,15 @@ section {
     border: none;
     text-transform: uppercase;
     font-size: 12px;
-    padding: 3px 10px 15px;
+    padding: 4px 10px 15px;
 }
 
-.right_section .navbar-nav > li:first-child a:after {
+/*.right_section .navbar-nav > li:first-child a:after {
     content: " /";
     margin-left: 5px;
+}*/
+li .divider{
+    color: red !important;
 }
 
 /*.right_section .navbar-nav > li:last-child {
@@ -609,6 +612,39 @@ section {
 
 
 /*Dropdown Menu*/
+.dropdown-menu-second{
+    display: inherit;
+    top: 80% !important;
+    padding: 0;
+    margin-top: -65px;
+    font-size: 13px;
+    opacity: 0;
+    visibility: hidden;
+    border-radius: 0;
+    box-shadow: 0px 0px 0px #fff;
+    -webkit-transition: all 0.3s ease 0s;
+    -moz-transition: all 0.3s ease 0s;
+    -o-transition: all 0.3s ease 0s;
+    transition: all 0.3s ease 0s;
+    -webkit-transform: translateY(50px);
+    -moz-transform: translateY(50px);
+    transform: translateY(50px);
+}
+.dropdown-second:hover .dropdown-menu-second {
+    display: block;
+    margin-top: 30px !important;
+    opacity: 1;
+    visibility: visible;
+    -webkit-transform: translateY(0);
+    -moz-transform: translateY(0);
+    transform: translateY(0);
+}
+.dropdown-menu-second li a:hover {
+    color: #31aae2;
+    background-color: #f5f5f5;
+    padding-left: 25px;
+}
+
 
 .dropdown-menu {
     display: inherit;
@@ -626,6 +662,9 @@ section {
     -webkit-transform: translateY(50px);
     -moz-transform: translateY(50px);
     transform: translateY(50px);
+}
+.accmenu{
+    top: 20% !important;
 }
 
 .dropdown:hover .dropdown-menu {
@@ -2103,3 +2142,80 @@ button.btn.btn-primary{
 .form-error-message{
     color: red;
 }
+
+/*Avatar*/
+
+.picture{
+    max-width: 128px;
+    max-height: 128px;
+    border-radius: 50%;
+}
+
+.picture-show{
+    max-width: 32px;
+    max-height: 32px;
+}
+img.picture.picture-mini{
+    max-width: 24px;
+    min-height: 24px;
+}
+
+/*Profile*/
+
+/*@import url(http://fonts.googleapis.com/css?family=Lato:400,700);
+body
+{
+font-family: 'Lato', 'sans-serif';
+}*/
+.profile
+{
+min-height: 310px;
+display: inline-block;
+}
+figcaption.ratings
+{
+margin-top:20px;
+}
+figcaption.ratings a
+{
+color:#f1c40f;
+font-size:11px;
+}
+figcaption.ratings a:hover
+{
+color:#f39c12;
+text-decoration:none;
+}
+.divider
+{
+border-top:1px solid rgba(0,0,0,0.1);
+}
+.emphasis
+{
+border-top: 4px solid transparent;
+/*margin-top: 30px;*/
+}
+.emphasis:hover
+{
+border-top: 4px solid #1abc9c;
+padding-bottom: 30px;
+}
+.emphasis h2
+{
+margin-bottom:0;
+}
+span.tags
+{
+background: #1abc9c;
+border-radius: 2px;
+color: #f5f5f5;
+font-weight: bold;
+padding: 2px 4px;
+}
+
+
+.two{
+    padding-top: 30px !important;
+}
+
+

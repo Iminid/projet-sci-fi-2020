@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>S'inregistrer
+			{% block title %}{% endblock %}
+		</title>
+
+		<!-- favicon -->
+		<link
+		href="/img/favicon.png" rel="icon">
+
+		<!-- web-fonts -->
+		<link href='https://fonts.googleapis.com/css?family=Roboto:100,300,400,700,500' rel='stylesheet' type='text/css'>
+		<link
+		href="https://fonts.googleapis.com/css?family=Old+Standard+TT" rel="stylesheet">
+
+		<!-- Bootstrap -->
+		<link
+		href="/css/bootstrap.min.css" rel="stylesheet">
+
+		<!-- font-awesome -->
+		<link
+		href="/fonts/font-awesome/font-awesome.min.css" rel="stylesheet">
+		<!-- Mobile Menu Style -->
+		<link
+		href="/css/mobile-menu.css" rel="stylesheet">
+
+		<!-- Owl carousel -->
+		<link href="/css/owl.carousel.css" rel="stylesheet">
+		<link
+		href="/css/owl.theme.default.min.css" rel="stylesheet">
+		<!-- Theme Style -->
+		<link href="/css/style.css" rel="stylesheet">
+		<link href="/css/sign.style.css" rel="stylesheet">
+
+	</head>
+
+	{% block body %}
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="wrap">
+						<p class="form-title">
+							S'enregistrer</p>
+						{{ form_start(form) }}
+						{{ form_widget(form) }}
+						<button type="submit" class="btn btn-success">S'enregistrer</button>
+						{{ form_end(form) }}
+					</div>
+				</div>
+			</div>
+		{% endblock %}
+	</html>
+</html>

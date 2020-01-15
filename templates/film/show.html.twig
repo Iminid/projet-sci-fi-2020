@@ -21,6 +21,7 @@
 							<h1>
 								<a href="#">{{ films.title }}</a>
 							</h1>
+						
 						</div>
 						<!-- entity_title -->
 
@@ -70,16 +71,23 @@
 								{% if not loop.last %},{% endif %}
 								{% endfor %}
 							</p>
-
+                       
 
 						</div>
 						<!-- entity_content -->
 
 						<div class="entity_footer">
+						{% set fa = films.author %}
 							<button  type="button" class="btn btn-secondary">
 								<a href="{{ path('films') }}"><i  class="fa fa-angle-double-left"></i></a>
 							</button>
-
+                           
+							<p>Ajouté par : <a href="{{ path('user_profile', {'slug': fa.slug}) }}">
+								<img src="{{ fa.avatar }}" class="picture picture-show" alt="Avatar de 
+								{{ fa.Name}}">
+							</a> <a href="{{ path('user_profile', {'slug': fa.slug}) }}">{{ fa.Name}}</a></p> 
+							
+  
 							<div class="entity_social">
 								<span>
 									<i class="fa fa-comments-o"></i>4

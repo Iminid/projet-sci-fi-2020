@@ -55,6 +55,8 @@ class BookController extends AbstractController
                 $manager->persist($year);
             }
 
+            $book->setAuthor($this->getUser());
+
             $manager->persist($book);
             $manager->flush();
 
