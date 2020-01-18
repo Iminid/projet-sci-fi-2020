@@ -80,6 +80,11 @@
 								{{ ba.Name}}">
 							</a> {{ ba.Name}} </p>
 
+							{% if app.user and app.user == book.author %}
+							<a href="{{ path('books_edit', {'slug': book.slug}) }}" class="btn btn-success">Modifier</a>
+							<a href="{{ path('books_delete', {'slug': book.slug}) }}" class="btn btn-danger">Supprimer</a>
+							{% endif %}
+
 							<div class="entity_social">
 								<span>
 									<i class="fa fa-comments-o"></i>4

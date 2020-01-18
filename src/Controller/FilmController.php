@@ -11,12 +11,14 @@ use App\Form\FilmType;
 use App\Entity\Country;
 use App\Repository\FilmsRepository;
 use App\Repository\SeriesRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class FilmController extends AbstractController
@@ -39,6 +41,7 @@ class FilmController extends AbstractController
      * Ajouter un film
      *
      * @Route("/films/add", name="films_add")
+     * @IsGranted("ROLE_USER")
      * @return Response
      */
     public function create(Request $request, ObjectManager $manager){
@@ -92,6 +95,7 @@ class FilmController extends AbstractController
      * Edition
      *
      * @Route("/films/{slug}/edit", name="films_edit")
+     * @Security("is_granted('ROLE_USER') and user === film.getAuthor()", message="Cette article a été crée par un autre utilisateur")
      * 
      * @return Response
      */
@@ -154,5 +158,25 @@ class FilmController extends AbstractController
         return $this->render('film/show.html.twig', [
             'films' => $film
         ]);
+    }
+
+    /**
+     * Supression
+     * 
+     * @Route("/films/{slug}/delete", name="films_delete")
+     * @Security("is_granted('ROLE_USER') and user == film.getAuthor()", message="Cette article a été crée par un autre utilisateur")
+     *
+     * @param Films $film
+     * @param ObjectManager $manager
+     * @return Response
+     */
+    public function delete(Films $film, ObjectManager $manager){
+        $manager->remove($film);
+        $manager->flush();
+        $this->addFlash(
+            'success',
+            "Le film <strong>{$film->getTitle()} </strong> a bien été supprimé !"
+        );
+        return $this->redirectToRoute("films");
     }
 }

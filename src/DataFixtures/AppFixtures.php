@@ -3,6 +3,7 @@
 namespace App\DataFixtures;
 
 use Faker\Factory;
+use App\Entity\Role;
 use App\Entity\User;
 use App\Entity\Year;
 use App\Entity\Actor;
@@ -30,6 +31,18 @@ class AppFixtures extends Fixture
     public function load(ObjectManager $manager)
     {
         $faker = Factory::create('fr-FR');
+
+        $roleAdmin = new Role();
+        $roleAdmin->setTitle('ROLE_ADMIN');
+        $manager->persist($roleAdmin);
+        $userAdmin = new User();
+        $userAdmin->setFirstName('Mikhail')
+                  ->setLastName('Baranov')
+                  ->setEmail('qklm@hotmail.com')
+                  ->setHash($this->encoder->encodePassword($userAdmin, 'password'))
+                  ->setAvatar('https://randomuser.me/api/portraits/men/91.jpg')
+                  ->addUserRole($roleAdmin);
+        $manager->persist($userAdmin);
 
         //===Users===//
         $sexes = ['male', 'female'];
@@ -173,11 +186,14 @@ class AppFixtures extends Fixture
             $coverImage = $faker->imageUrl(525, 295);
             $description = '<p>' . join('</p><p>', $faker->paragraphs(5)) . '</p>';
 
+            $user = $users[mt_rand(0, count($users) - 1)];
+
             $series->setTitle($title)
                 ->setCoverImage($coverImage)
                 ->setDescription($description)
                 ->setSeasons(mt_rand(1, 1))
-                ->setAuthor($user);;
+                ->setAuthor($user);
+            $manager->persist($series);
 
             //***Add Persons Series***//
             $persons = new ArrayCollection();
@@ -277,11 +293,13 @@ class AppFixtures extends Fixture
             $coverImage = $faker->imageUrl(244, 400);
             $description = '<p>' . join('</p><p>', $faker->paragraphs(5)) . '</p>';
 
+            $user = $users[mt_rand(0, count($users) - 1)];
+
             $books->setTitle($title)
                 ->setCoverImage($coverImage)
                 ->setDescription($description)
                 ->setPages(mt_rand(50, 980))
-                ->setAuthor($user);;
+                ->setAuthor($user);
                 $manager->persist($books);
 
 

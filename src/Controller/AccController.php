@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
@@ -75,6 +76,7 @@ class AccController extends AbstractController
      * Modification d'account
      * 
      * @Route("/account/profile", name="account_profile")
+     * @IsGranted("ROLE_USER")
      *
      * @return Response
      */
@@ -96,6 +98,7 @@ class AccController extends AbstractController
      * Modification du mot de passe
      * 
      * @Route("/account/pass-update", name="pass_update")
+     * @IsGranted("ROLE_USER")
      *
      * @return Reponse
      */
@@ -127,6 +130,7 @@ class AccController extends AbstractController
      * Connected user profile
      *
      *@Route("/account", name="account_home")
+     *@IsGranted("ROLE_USER")
      * 
      * @return Response
      */

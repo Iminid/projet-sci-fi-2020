@@ -6,11 +6,13 @@ use App\Entity\Person;
 use App\Entity\Series;
 use App\Form\SerieType;
 use App\Repository\SeriesRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class SerieController extends AbstractController
@@ -31,6 +33,7 @@ class SerieController extends AbstractController
      * Ajouter une série
      *
      * @Route("/series/add", name="series_add")
+     * @IsGranted("ROLE_USER")
      * 
      * @return Response
      */
@@ -86,6 +89,7 @@ class SerieController extends AbstractController
      * Edition
      *
      * @Route("/series/{slug}/edit", name="series_edit")
+     * @Security("is_granted('ROLE_USER') and user === serie.getAuthor()", message="Cette article a été crée par un autre utilisateur")
      * 
      * @return Response
      */
@@ -145,5 +149,25 @@ class SerieController extends AbstractController
         return $this->render('serie/show.html.twig', [
             'serie' => $serie
         ]);
+    }
+
+    /**
+     * Supression
+     * 
+     * @Route("/series/{slug}/delete", name="series_delete")
+     * @Security("is_granted('ROLE_USER') and user == serie.getAuthor()", message="Cette article a été crée par un autre utilisateur")
+     *
+     * @param Series $serie
+     * @param ObjectManager $manager
+     * @return Response
+     */
+    public function delete(Series $serie, ObjectManager $manager){
+        $manager->remove($serie);
+        $manager->flush();
+        $this->addFlash(
+            'success',
+            "Le film <strong>{$serie->getTitle()} </strong> a bien été supprimé !"
+        );
+        return $this->redirectToRoute("series");
     }
 }

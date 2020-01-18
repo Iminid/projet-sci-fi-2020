@@ -90,7 +90,12 @@
 							<p>Ajouté par : <a href="">
 								<img src="{{ sa.avatar }}" class="picture picture-show" alt="Avatar de 
 								{{ sa.Name}}">
-							</a> {{ sa.Name}} </p> 
+							</a> {{ sa.Name}} </p>
+
+							{% if app.user and app.user == serie.author %}
+							<a href="{{ path('series_edit', {'slug': serie.slug}) }}" class="btn btn-success">Modifier</a>
+							<a href="{{ path('series_delete', {'slug': serie.slug}) }}" class="btn btn-danger">Supprimer</a>
+							{% endif %} 
 
 							<div class="entity_social">
 								<span>

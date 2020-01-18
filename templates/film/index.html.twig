@@ -42,14 +42,17 @@
 								<i class="fa fa-star"></i>
 							</div>
 							<!-- entity_rating -->
+							{% set fa = film.author %}
 							<div class="category_article_date">
-								<a href="#">23 Oct - 2018</a>, par:
-								<a href="#">Admin</a>
+								par:
+								<a href="{{ path('user_profile', {'slug': fa.slug}) }}">{{ film.author.Name }}</a>
 							</div>
 							<!-- category_article_title -->
 							<div class="category_article_content">
 								{{ film.description }}
 							</div>
+							
+
 							<!-- category_article_content -->
 							<div class="media_social">
 								<span>

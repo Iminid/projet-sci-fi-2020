@@ -639,11 +639,6 @@ li .divider{
     -moz-transform: translateY(0);
     transform: translateY(0);
 }
-.dropdown-menu-second li a:hover {
-    color: #31aae2;
-    background-color: #f5f5f5;
-    padding-left: 25px;
-}
 
 
 .dropdown-menu {

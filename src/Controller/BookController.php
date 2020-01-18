@@ -10,6 +10,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class BookController extends AbstractController
@@ -33,6 +35,7 @@ class BookController extends AbstractController
      * Ajouter un livre
      *
      * @Route("/livres/add", name="livres_add")
+     * @IsGranted("ROLE_USER")
      * 
      * @return Response
      */
@@ -79,6 +82,7 @@ class BookController extends AbstractController
      * Edition
      *
      * @Route("/livres/{slug}/edit", name="books_edit")
+     * @Security("is_granted('ROLE_USER') and user === book.getAuthor()", message="Cette article a été crée par un autre utilisateur")
      * 
      * @return Response
      */
@@ -133,5 +137,25 @@ class BookController extends AbstractController
         return $this->render('book/show.html.twig', [
             'book' => $book
         ]);
+    }
+
+    /**
+     * Supression
+     * 
+     * @Route("/livres/{slug}/delete", name="books_delete")
+     * @Security("is_granted('ROLE_USER') and user == book.getAuthor()", message="Cette article a été crée par un autre utilisateur")
+     *
+     * @param Books $book
+     * @param ObjectManager $manager
+     * @return Response
+     */
+    public function delete(Books $book, ObjectManager $manager){
+        $manager->remove($book);
+        $manager->flush();
+        $this->addFlash(
+            'success',
+            "Le livre <strong>{$book->getTitle()} </strong> a bien été supprimé !"
+        );
+        return $this->redirectToRoute("livres");
     }
 }

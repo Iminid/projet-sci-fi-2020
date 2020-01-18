@@ -86,8 +86,12 @@
 								<img src="{{ fa.avatar }}" class="picture picture-show" alt="Avatar de 
 								{{ fa.Name}}">
 							</a> <a href="{{ path('user_profile', {'slug': fa.slug}) }}">{{ fa.Name}}</a></p> 
-							
-  
+
+							{% if app.user and app.user == films.author %}
+							<a href="{{ path('films_edit', {'slug': films.slug}) }}" class="btn btn-success">Modifier</a>
+							<a href="{{ path('films_delete', {'slug': films.slug}) }}" class="btn btn-danger">Supprimer</a>
+							{% endif %}
+
 							<div class="entity_social">
 								<span>
 									<i class="fa fa-comments-o"></i>4

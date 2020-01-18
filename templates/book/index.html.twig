@@ -38,7 +38,8 @@
                                             <i class="fa fa-star"></i>
                                             <i class="fa fa-star"></i>
                                         </div>
-                                        <div class="category_article_date"><a href="#">23 Oct - 2018</a>, par: <a href="#">Admin</a></div>
+                                        <div class="category_article_date">
+                                        par: <a href="{{ path('user_profile', {'slug': book.author.slug}) }}">{{ book.author.Name }}</a></div>
                                         <!-- category_article_title -->
 
                                         <div class="category_article_content">
