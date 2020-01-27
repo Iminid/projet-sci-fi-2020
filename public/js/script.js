@@ -171,4 +171,24 @@ function countUpdate(){
 countUpdate();
 DeleteButtons();
 
+/*Admin*/
+jQuery(document).ready(function(){
+    jQuery("#open-menu").click(function(){
+        if(jQuery('#page-container').hasClass('show-menu')){
+        jQuery("#page-container").removeClass('show-menu');
+    }
+        
+        else{
+        jQuery("#page-container").addClass('show-menu');
+        }
+    });
+});
+
+/* Admin code */
+$(document).ready(function(){
+    $('[data-action="delete"]').on('click', function(){
+        const target = $(this).data('target');
+        $(target).remove();
+    });
+});
 

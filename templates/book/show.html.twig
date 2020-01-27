@@ -10,13 +10,23 @@
 				<div class="col-md-12">
 					<div class="entity_wrapper">
 						<div class="entity_title">
-							<div class="entity_rating item">
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star-half-full"></i>
-							</div>
+							{% if book.comments|length > 0 %}
+									<div class="star-right">
+										<span class="rating">
+											{% include "shared/rate.html.twig" with {'rate': book.getRating} %}
+										</span>
+									</div>
+							{% else %}
+								<div class="star-right">
+									<span class="rating">
+										<i class="far fa-star"></i>
+										<i class="far fa-star"></i>
+										<i class="far fa-star"></i>
+										<i class="far fa-star"></i>
+										<i class="far fa-star"></i>
+									</span>
+								</div>
+							{% endif %}
 							<!-- entity_rating -->
 							<h1>
 								<a href="#">{{ book.title }}</a>
@@ -45,7 +55,7 @@
 
 							<div class="item_desc">Auteur(s) :</div>
 							<p class="prod">
-							    {% for writer in book.writers %}
+								{% for writer in book.writers %}
 									{{ writer.firstname }}
 									{{ writer.lastname }}
 									{% if not loop.last %},
@@ -54,41 +64,46 @@
 							</p>
 							<div class="item_desc">Année :</div>
 							<p class="year">
-							    {% for year in book.years %}
-								{{ year.date|date("Y")}} 
-								{% if not loop.last %},{% endif %}
+								{% for year in book.years %}
+									{{ year.date|date("Y")}}
+									{% if not loop.last %},
+									{% endif %}
 								{% endfor %}
 							</p>
 							<div class="item_desc">Pages :</div>
 							<p class="countr">
-							      {{ book.pages }} 
+								{{ book.pages }}
 							</p>
 
 						</div>
 						<!-- entity_content -->
 
 						<div class="entity_footer">
-						{% set ba = book.author %}
+							{% set ba = book.author %}
 							<button type="button" class="btn btn-secondary">
 								<a href="{{ path('films') }}">
 									<i class="fa fa-angle-double-left"></i>
 								</a>
 							</button>
 
-							<p>Ajouté par : <a href="">
-								<img src="{{ ba.avatar }}" class="picture picture-show" alt="Avatar de 
-								{{ ba.Name}}">
-							</a> {{ ba.Name}} </p>
+							<p>Ajouté par :
+								<a href="{{ path('user_profile', {'slug': ba.slug}) }}">
+									<img src="{{ ba.avatar }}" class="picture picture-show" alt="Avatar de
+									{{ ba.Name}}">
+								</a>
+								<a href="{{ path('user_profile', {'slug': ba.slug}) }}">{{ ba.Name}}</a>
+							</p>
 
 							{% if app.user and app.user == book.author %}
-							<a href="{{ path('books_edit', {'slug': book.slug}) }}" class="btn btn-success">Modifier</a>
-							<a href="{{ path('books_delete', {'slug': book.slug}) }}" class="btn btn-danger">Supprimer</a>
+								<a href="{{ path('books_edit', {'slug': book.slug}) }}" class="btn btn-success">Modifier</a>
+								<a href="{{ path('books_delete', {'slug': book.slug}) }}" class="btn btn-danger">Supprimer</a>
 							{% endif %}
 
 							<div class="entity_social">
 								<span>
-									<i class="fa fa-comments-o"></i>4
-									<a href="#">Commentaires</a>
+									<i class="fa fa-comments-o"></i>
+									{{ book.comments | length }}
+									<a href="{{ path('books_show', {'slug': book.slug}) }}#comments">Commentaires</a>
 								</span>
 							</div>
 							<!-- entity_social -->
@@ -106,132 +121,80 @@
 						</div>
 						<!-- entity_title -->
 
-						<div class="media">
-							<div class="media-left">
-								<a href="#">
-									<img alt="64x64" class="media-object" data-src="assets/img/reader_img1.jpg" src="assets/img/reader_img1.jpg" data-holder-rendered="true">
-								</a>
-							</div>
-							<div class="media-body">
-								<h2 class="media-heading">
-									<a href="#">Josh Ryan</a>
-								</h2>
-								But who has any right to find fault with a man who chooses to enjoy a pleasure that has
-																                                            no annoying consequences, or one who avoids a pain that produces no resultant pleasure?
-
-								<div class="entity_vote">
-									<a href="#">
-										<i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
-									</a>
-									<a href="#">
-										<i class="fa fa-thumbs-o-down" aria-hidden="true"></i>
-									</a>
-									<a href="#">
-										<span class="reply_ic">Répondre
-										</span>
-									</a>
-								</div>
+						{% if book.comments | length > 0 %}
+							{% for comment in book.comments %}
 								<div class="media">
 									<div class="media-left">
-										<a href="#">
-											<img alt="64x64" class="media-object" data-src="assets/img/reader_img2.jpg" src="assets/img/reader_img2.jpg" data-holder-rendered="true">
+										<a href="{{ path('user_profile', {'slug': comment.author.slug}) }}">
+											<img class="media-object com-avatar" src="{{ comment.author.avatar }}" alt="Avatar de
+											{{ ba.Name}}" data-holder-rendered="true">
 										</a>
 									</div>
 									<div class="media-body">
 										<h2 class="media-heading">
-											<a href="#">Admin</a>
+											<a href="{{ path('user_profile', {'slug': comment.author.slug}) }}">{{ comment.author.Name }}</a>
+											<small>Le : {{ comment.createdAt | date('d/m/Y') }}</small>
 										</h2>
-										But who has any right to find fault with a man who chooses to enjoy a pleasure
-																				                                                    that has no annoying consequences, or one who avoids a pain that produces no
-																				                                                    resultant pleasure?
-
-										<div class="entity_vote">
-											<a href="#">
-												<i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
-											</a>
-											<a href="#">
-												<i class="fa fa-thumbs-o-down" aria-hidden="true"></i>
-											</a>
-											<a href="#">
-												<span class="reply_ic">Répondre
-												</span>
-											</a>
-										</div>
+										{{ comment.content }}
+										<br>
+										<strong>Note donnée par
+											{{ comment.author.Name }}
+											:
+											{% include "shared/rate.html.twig" with {'rate': comment.rate} %}
+											</strong>
+										
 									</div>
 								</div>
+								<!-- media end -->
+							{% endfor %}
+
+						{% else %}
+							<p>Pas de commentaires</p> 
+
+						{% endif %}
+
+
+						<div class="entity_comments">
+							<h2>Poster un commentaire</h2>
+							<!--Entity Title -->
+
+							{{ form_start(form) }}
+							{{ form_widget(form) }}
+							<button class="submit btn btn-success">Envoyer</button>
+							{{ form_end(form) }}
+
+							<!--<div class="entity_comment_from">
+								<form>
+									<div class="form-group comment">
+										<textarea class="form-control" id="inputComment" placeholder="Comment"></textarea>
+									</div>
+
+									<button type="submit" class="btn btn-submit red">Envoyer</button>
+								</form>
 							</div>
+							<!--Entity Comments From -->
+							<!--LOGIN AND REGISTRY -->
+
+							<a class="connec" href="{{ path('acc_register') }}">
+								<p>Pas encore enregistré ?</p>
+							</a>
+							<a class="connec" href="{{ path('acc_login') }}">
+								<p>Se connecter</p>
+							</a>
 
 						</div>
-						<!-- media end -->
-
-						<div class="media">
-							<div class="media-left">
-								<a href="#">
-									<img alt="64x64" class="media-object" data-src="assets/img/reader_img3.jpg" src="assets/img/reader_img3.jpg" data-holder-rendered="true">
-								</a>
-							</div>
-							<div class="media-body">
-								<h2 class="media-heading">
-									<a href="#">Philip Joshep</a>
-								</h2>
-								But who has any right to find fault with a man who chooses to enjoy a pleasure that has
-																                                            no annoying consequences, or one who avoids a pain that produces no resultant pleasure?
-
-								<div class="entity_vote">
-									<a href="#">
-										<i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
-									</a>
-									<a href="#">
-										<i class="fa fa-thumbs-o-down" aria-hidden="true"></i>
-									</a>
-									<a href="#">
-										<span class="reply_ic">Répondre
-										</span>
-									</a>
-								</div>
-							</div>
-						</div>
-						<!-- media end -->
-					</div>
-					<!--Readers Comment-->
-
-
-					<div class="entity_comments">
-						<h2>Poster un commentaire</h2>
-						<!--Entity Title -->
-
-						<div class="entity_comment_from">
-							<form>
-								<div class="form-group comment">
-									<textarea class="form-control" id="inputComment" placeholder="Comment"></textarea>
-								</div>
-
-								<button type="submit" class="btn btn-submit red">Envoyer</button>
-							</form>
-						</div>
-						<!--Entity Comments From -->
-						<!--LOGIN AND REGISTRY -->
-
-						<a class="connec" href="admin/registr.html">
-							<p>Pas encore enregistré ?</p>
-						</a>
-						<a class="connec" href="admin/login.html">
-							<p>Se connecter</p>
-						</a>
+						<!--Entity Comments -->
 
 					</div>
-					<!--Entity Comments -->
+					<!--Left Section-->
+
 
 				</div>
-				<!--Left Section-->
-
+				<!-- row -->
 
 			</div>
-			<!-- row -->
+			<!-- container -->
 
-		</div>
-		<!-- container -->
-
-	</section>
-	<!-- Entity Section Wrapper -->
-{% endblock %}
+		</section>
+		<!-- Entity Section Wrapper -->
+	{% endblock %}

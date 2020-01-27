@@ -84,6 +84,11 @@ class Films
      */
     private $author;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Comments", mappedBy="film", orphanRemoval=true)
+     */
+    private $comments;
+
 
 
     
@@ -95,8 +100,17 @@ class Films
         $this->autors = new ArrayCollection();
         $this->years = new ArrayCollection();
         $this->actors = new ArrayCollection();
+        $this->comments = new ArrayCollection();
     }
   
+
+    public function getRating(){
+        $s = array_reduce($this->comments->toArray(), function($total, $comment){
+            return $total + $comment->getRate();
+        }, 0);
+        if(count($this->comments) > 0 ) return  $s /  count($this->comments);
+        return 0;
+    }
 
     /**
      * Slug initialization
@@ -304,6 +318,44 @@ class Films
     public function setAuthor(?User $author): self
     {
         $this->author = $author;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Comments[]
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(Comments $comment): self
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments[] = $comment;
+            $comment->setFilm($this);
+        }
+
+        return $this;
+    }
+
+    public function setComment(?User $comment): self
+    {
+        $this->comment = $comment;
+
+        return $this;
+    }
+
+    public function removeComment(Comments $comment): self
+    {
+        if ($this->comments->contains($comment)) {
+            $this->comments->removeElement($comment);
+            // set the owning side to null (unless already changed)
+            if ($comment->getFilm() === $this) {
+                $comment->setFilm(null);
+            }
+        }
 
         return $this;
     }  

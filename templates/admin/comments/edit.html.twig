@@ -1,0 +1,37 @@
+{% extends "admin/base.html.twig" %}
+{% block title %}
+	Midification d'un commentaire
+{% endblock %}
+{% block body %}
+	<div class="main-body-content w-100 ets-pt">
+		<div class="container">
+			<h1>Modification d'un commentaire</h1>
+			<div class="alert alert-info">
+				{% if comment.film %}
+					<strong>Article : {{ comment.film.title }}</strong><br>
+                    <strong>Auteur : {{ comment.author.Name }}</strong><br>
+                    <strong>La date : {{ comment.createdAt|date('d/m/Y h:i') }}</strong><br>
+                    <strong>
+                        <div class="stars">
+								<span class="rating">
+									{% include "shared/rate.html.twig" with {'rate': comment.rate} %}
+								</span>
+							</div>
+                    </strong>
+				{% elseif comment.serie %}
+					<strong>{{ comment.serie.title }}</strong>
+				{% elseif comment.book %}
+					<strong>{{ comment.book.title }}</strong>
+				{% endif %}
+			</div>
+
+			{{ form_start(form) }}
+			{{ form_widget(form) }}
+			<button type="submit" class="btn btn-primary">
+				<i class="fas fa-check"></i>
+				Enregistrer
+			</button>
+			{{ form_end(form) }}
+		</div>
+	</div>
+{% endblock %}

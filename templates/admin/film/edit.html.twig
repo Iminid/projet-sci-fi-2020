@@ -1,0 +1,195 @@
+{% extends "admin/base.html.twig" %}
+{% block title %}Edition du film
+	{{ film.id }}
+{% endblock %}
+{% form_theme form _self %}
+{% block body %}
+	<div class="main-body-content w-100 ets-pt">
+		<h1 class="edit-title">Modification du film :
+			<strong>{{ film.title }}</strong>
+		</h1>
+		<div class="container">
+			{{ form_start(form) }}
+			<div class="row">
+				<div class="col">
+					<div class="card bg-light">
+						<div class="card-body">
+							{{ form_widget(form) }}
+							<button type="submit" class="btn btn-primary">
+								<i class="fas fa-check"></i>
+								Enregistrer
+							</button>
+						</div>
+					</div>
+				</div>
+				<div class="col">
+					<div class="card bg-light">
+						<div class="card-title">
+							<h3>Les commentaires</h3>
+						</div>
+						<div class="card-body">
+							<table class="table">
+								<thead>
+									<tr>
+										<th>Id</th>
+										<th>Auteur</th>
+										<th>Note</th>
+										<th>Date</th>
+										<th>Commentaire</th>
+										<th></th>
+									</tr>
+								</thead>
+								<tbody>
+									{% for comment in film.comments %}
+										<tr>
+											<td>{{ comment.id }}</td>
+											<td>{{ comment.author.Name }}</td>
+											<td>{{ comment.rate }}</td>
+											<td>{{ comment.createdAt | date('d/m/Y H:i') }}</td>
+											<td>{{ comment.content }}</td>
+											<td>
+												<a href="#" class="btn btn-primary">
+													<i class="fas fa-pen"></i>
+												</a>
+											</td>
+										</tr>
+									{% endfor %}
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			{{ form_end(form) }}
+		</div>
+	</div>
+{% endblock %}
+
+{# Form Persons #}
+{% block _film_persons_widget %}
+	{{ form_label(form, 'Réalisateur(s) :') }}
+	{{ form_widget(form) }}
+{% endblock %}
+
+{% block _film_persons_entry_row %}
+	<div id="block_{{ id }}">{{ form_widget(form) }}</div>
+{% endblock %}
+
+{% block _film_persons_entry_widget %}
+	<div class="row align-items-center">
+		<div class="col-3">
+			{{ form_row(form.firstname,  {'label': 'Prénom'}) }}
+		</div>
+		<div class="col-3">
+			{{ form_row(form.middlename) }}
+		</div>
+		<div class="col-3">
+			{{ form_row(form.lastname,  {'label': 'Nom'}) }}
+		</div>
+		<div class="col">
+			<button type="button" class="btn btn-danger" data-action="delete" data-target="#block_{{ id }}">
+				<i class="fas fa-trash"></i>
+			</button>
+		</div>
+	</div>
+{% endblock %}
+
+{# Form Autors #}
+{% block _film_autors_widget %}
+	{{ form_label(form, 'Producteur(s) :') }}
+	{{ form_widget(form) }}
+{% endblock %}
+
+{% block _film_autors_entry_row %}
+	<div id="block_{{ id }}">{{ form_widget(form) }}</div>
+{% endblock %}
+
+{% block _film_autors_entry_widget %}
+	<div class="row align-items-center">
+		<div class="col-3">
+			{{ form_row(form.firstname,  {'label': 'Prénom'}) }}
+		</div>
+		<div class="col-3">
+			{{ form_row(form.middlename) }}
+		</div>
+		<div class="col-3">
+			{{ form_row(form.lastname,  {'label': 'Nom'}) }}
+		</div>
+		<div class="col">
+			<button type="button" class="btn btn-danger" data-action="delete" data-target="#block_{{ id }}">
+				<i class="fas fa-trash"></i>
+			</button>
+		</div>
+	</div>
+{% endblock %}
+
+{# Form Actors #}
+{% block _film_actors_widget %}
+	{{ form_label(form, 'Acteur(s) :') }}
+	{{ form_widget(form) }}
+{% endblock %}
+
+{% block _film_actors_entry_row %}
+	<div id="block_{{ id }}">{{ form_widget(form) }}</div>
+{% endblock %}
+
+{% block _film_actors_entry_widget %}
+	<div class="row align-items-center">
+		<div class="col-3">
+			{{ form_row(form.firstname,  {'label': 'Prénom'}) }}
+		</div>
+		<div class="col-3">
+			{{ form_row(form.middlename) }}
+		</div>
+		<div class="col-3">
+			{{ form_row(form.lastname,  {'label': 'Nom'}) }}
+		</div>
+		<div class="col">
+			<button type="button" class="btn btn-danger" data-action="delete" data-target="#block_{{ id }}">
+				<i class="fas fa-trash"></i>
+			</button>
+		</div>
+	</div>
+{% endblock %}
+
+{# Form Date #}
+{% block _film_years_widget %}
+	{{ form_label(form, 'Année :') }}
+	{{ form_widget(form) }}
+{% endblock %}
+
+{% block _film_years_entry_row %}
+	{{ form_widget(form) }}
+{% endblock %}
+
+{% block _film_years_entry_widget %}
+	<div class="row">
+		<div class="col-4">
+			{{ form_row(form.date,  {'label': ' '}) }}
+		</div>
+	</div>
+{% endblock %}
+
+{# Form Country #}
+{% block _film_country_widget %}
+	{{ form_label(form, 'Pays :') }}
+	{{ form_widget(form) }}
+{% endblock %}
+
+{% block _film_country_entry_row %}
+	<div id="block_{{ id }}">{{ form_widget(form) }}</div>
+{% endblock %}
+
+{% block _film_country_entry_widget %}
+	<div class="row align-items-center">
+		<div class="col-4">
+			{{ form_row(form.countryname,  {'label': ' '}) }}
+		</div>
+		<div class="col">
+			<button type="button" class="btn btn-danger" data-action="delete" data-target="#block_{{ id }}">
+				<i class="fas fa-trash"></i>
+			</button>
+		</div>
+	</div>
+{% endblock %}

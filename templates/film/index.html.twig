@@ -33,14 +33,16 @@
 									</a>
 								</h2>
 							</div>
+							{% if film.comments|length > 0 %}
+								<div class="star-right">
+										<span class="rating">
+											{% include "shared/rate.html.twig" with {'rate': film.getRating} %}
+										</span>
+									</div>
+							{% else %}
+								<small class="star-right">Pas encore noté</small>
+							{% endif %}
 
-							<div class="entity_rating">
-								<i class="fa fa-star-half-full"></i>
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star"></i>
-							</div>
 							<!-- entity_rating -->
 							{% set fa = film.author %}
 							<div class="category_article_date">
@@ -57,7 +59,7 @@
 							<div class="media_social">
 								<span>
 									<i class="fa fa-comments-o"></i>
-									<a href="#">4</a>
+									<a href="#">{{ film.comments | length }}</a>
 									Commentaires</span>
 							</div>
 							<!-- media_social -->

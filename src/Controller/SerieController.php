@@ -5,6 +5,8 @@ namespace App\Controller;
 use App\Entity\Person;
 use App\Entity\Series;
 use App\Form\SerieType;
+use App\Entity\Comments;
+use App\Form\CommentsType;
 use App\Repository\SeriesRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -144,10 +146,22 @@ class SerieController extends AbstractController
      * 
      * @return Response
      */
-    public function show(Series $serie){
+    public function show(Series $serie, Request $request, EntityManagerInterface $manager){
+        $comment = new Comments();
+        $form = $this->createForm(CommentsType::class, $comment);
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()){
+            $comment->setSerie($serie)
+                    ->setAuthor($this->getUser());
+        $manager->persist($comment);
+        $manager->flush();
+
+        $this->addFlash('success', "Commentaire enregistré !");
+        }
 
         return $this->render('serie/show.html.twig', [
-            'serie' => $serie
+            'serie' => $serie,
+            'form' => $form->createView()
         ]);
     }
 

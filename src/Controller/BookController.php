@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Entity\Books;
 use App\Form\BookType;
+use App\Entity\Comments;
+use App\Form\CommentsType;
 use App\Repository\BooksRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -132,10 +134,22 @@ class BookController extends AbstractController
      * 
      * @return Response
      */
-    public function show(Books $book){
+    public function show(Books $book, Request $request, EntityManagerInterface $manager){
+        $comment = new Comments();
+        $form = $this->createForm(CommentsType::class, $comment);
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()){
+            $comment->setBook($book)
+                    ->setAuthor($this->getUser());
+        $manager->persist($comment);
+        $manager->flush();
+
+        $this->addFlash('success', "Commentaire enregistré !");
+        }
         
         return $this->render('book/show.html.twig', [
-            'book' => $book
+            'book' => $book,
+            'form' => $form->createView()
         ]);
     }
 

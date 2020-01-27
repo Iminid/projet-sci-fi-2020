@@ -9,6 +9,8 @@ use App\Entity\Films;
 use App\Entity\Person;
 use App\Form\FilmType;
 use App\Entity\Country;
+use App\Entity\Comments;
+use App\Form\CommentsType;
 use App\Repository\FilmsRepository;
 use App\Repository\SeriesRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -149,15 +151,30 @@ class FilmController extends AbstractController
      * 
      * @Route("/films/{slug}", name="films_show")
      *
+     * @param Request $request
+     * @param EntityManagerInterface $manager
      * @return Response
      */
-    public function show($slug, Films $film){
+    public function show($slug, Films $film, Request $request, EntityManagerInterface $manager){
+        $comment = new Comments();
+        $form = $this->createForm(CommentsType::class, $comment);
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()){
+            $comment->setFilm($film)
+                    ->setAuthor($this->getUser());
+        $manager->persist($comment);
+        $manager->flush();
+
+        $this->addFlash('success', "Commentaire enregistré !");
+        }
 
         //$film = $repo->findOneBySlug($slug);
 
         return $this->render('film/show.html.twig', [
-            'films' => $film
+            'films' => $film,
+            'form' => $form->createView()
         ]);
+        
     }
 
     /**
@@ -179,4 +196,30 @@ class FilmController extends AbstractController
         );
         return $this->redirectToRoute("films");
     }
+
+    
+    /**
+     * Supression d'un commentaire
+     * 
+     * @Route("/films/{slug}/delete-commentaire", name="films_com_delete")
+     * @Security("is_granted('ROLE_USER') and user == comment.getAuthor()", message="Cette article a été crée par un autre utilisateur")
+     *
+     * @param Films $film
+     * @param ObjectManager $manager
+     * @return Response
+     */
+    public function deleteComm($slug, Films $film, Comments $comment, ObjectManager $manager){
+        $manager->remove($comment);
+        $manager->flush();
+        $this->addFlash(
+            'success',
+            "Votre commentaire a bien été supprimé !"
+        );
+        return $this->redirectToRoute("films_com_delete", [
+            'slug' => $film->getSlug()
+        ]);
+    }
+
+    
+
 }

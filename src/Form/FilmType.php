@@ -50,7 +50,7 @@ class FilmType extends AppType
             ])
             ->add('years',  CollectionType::class, [
                 'label' => false,
-                'entry_type' => YearType::class,
+                'entry_type' => YearType::class, 
                 'allow_add' => true,
                 'allow_delete' => true
             ])

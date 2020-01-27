@@ -77,15 +77,27 @@ class Books
      */
     private $author;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Comments", mappedBy="book", orphanRemoval=true)
+     */
+    private $comments;
+
 
     public function __construct()
     {
         $this->writers = new ArrayCollection();
         $this->editors = new ArrayCollection();
         $this->years = new ArrayCollection();
+        $this->comments = new ArrayCollection();
     }
 
-
+    public function getRating(){
+        $s = array_reduce($this->comments->toArray(), function($total, $comment){
+            return $total + $comment->getRate();
+        }, 0);
+        if(count($this->comments) > 0 ) return  $s /  count($this->comments);
+        return 0;
+    }
 
    /**
      * Slug initialization
@@ -253,6 +265,37 @@ class Books
     public function setAuthor(?User $author): self
     {
         $this->author = $author;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Comments[]
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(Comments $comment): self
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments[] = $comment;
+            $comment->setBook($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comments $comment): self
+    {
+        if ($this->comments->contains($comment)) {
+            $this->comments->removeElement($comment);
+            // set the owning side to null (unless already changed)
+            if ($comment->getBook() === $this) {
+                $comment->setBook(null);
+            }
+        }
 
         return $this;
     }
