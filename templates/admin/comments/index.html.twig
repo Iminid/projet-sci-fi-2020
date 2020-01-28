@@ -19,7 +19,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				{% for comment in comments %}
+				{% for comment in pagination.data %}
 					<tr>
 						<td>{{ comment.id }}</td>
 						<td>{{ comment.createdAt|date('d/m/Y H:i') }}</td>
@@ -27,27 +27,33 @@
 							<img src="{{ comment.author.avatar }}" alt="Avatar de {{ comment.author.Name }}" class="picture picture-mini mr-2">
 							{{ comment.author.Name }}</td>
 						<td>{{ comment.content }}</td>
-						<td  class="stars-width">
+						<td class="stars-width">
 							<div class="stars">
 								<span class="rating">
 									{% include "shared/rate.html.twig" with {'rate': comment.rate} %}
 								</span>
 							</div>
 						</td>
-                        {% if comment.film %}
-						<td>{{ comment.film.title }}</td>
-                        {% elseif comment.serie %}
-                        <td>{{ comment.serie.title }}</td>
-                        {% elseif comment.book %}
-                        <td>{{ comment.book.title }}</td>
-                        {% endif %}
+						{% if comment.film %}
+							<td>{{ comment.film.title }}</td>
+						{% elseif comment.serie %}
+							<td>{{ comment.serie.title }}</td>
+						{% elseif comment.book %}
+							<td>{{ comment.book.title }}</td>
+						{% endif %}
 						<td>
-                            <a href="{{ path('admin_comments_edit', {'id': comment.id}) }}" class="btn btn-primary"><i class="fas fa-pen"></i></a>
-                            <a href="{{ path('admin_comments_delete', {'id': comment.id}) }}" class="btn btn-danger"><i class="fas fa-trash"></i></a>
-                        </td>
+							<a href="{{ path('admin_comments_edit', {'id': comment.id}) }}" class="btn btn-primary">
+								<i class="fas fa-pen"></i>
+							</a>
+							<a href="{{ path('admin_comments_delete', {'id': comment.id}) }}" class="btn btn-danger">
+								<i class="fas fa-trash"></i>
+							</a>
+						</td>
 					</tr>
 				{% endfor %}
 			</tbody>
 		</table>
+
+		{{ pagination.display() }}
 	</div>
 {% endblock %}

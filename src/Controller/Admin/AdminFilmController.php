@@ -4,21 +4,25 @@ namespace App\Controller\Admin;
 
 use App\Entity\Films;
 use App\Form\FilmType;
+use App\Services\Pagination;
 use App\Repository\FilmsRepository;
-use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\HttpFoundation\Request;
+use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class AdminFilmController extends AbstractController
 {
     /**
-     * @Route("/admin/films", name="admin_films_index")
+     * @Route("/admin/films/{pages<\d+>?1}", name="admin_films_index")
      */
-    public function index(FilmsRepository $repo)
+    public function index(FilmsRepository $repo, $pages, Pagination $pagination)
     {
+        $pagination->setClassEntity(Films::class)
+                   ->setPage($pages);
+
         return $this->render('admin/film/index.html.twig', [
-            'films' => $repo->findAll()
+            'pagination' => $pagination
         ]);
     }
 

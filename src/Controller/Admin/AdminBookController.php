@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\Books;
 use App\Form\BookType;
+use App\Services\Pagination;
 use App\Repository\BooksRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -13,12 +14,15 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class AdminBookController extends AbstractController
 {
     /**
-     * @Route("/admin/livres", name="admin_books_index")
+     * @Route("/admin/livres/{pages<\d+>?1}", name="admin_books_index")
      */
-    public function index(BooksRepository $repo)
+    public function index(BooksRepository $repo, $pages, Pagination $pagination)
     {
+        $pagination->setClassEntity(Books::class)
+                   ->setPage($pages);
+
         return $this->render('admin/book/index.html.twig', [
-            'books' => $repo->findAll()
+            'pagination' => $pagination
         ]);
     }
 

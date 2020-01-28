@@ -3,23 +3,29 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Comments;
+use App\Services\Pagination;
 use App\Form\AdminCommentType;
-use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\HttpFoundation\Request;
+use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class AdminComController extends AbstractController
 {
     /**
-     * @Route("/admin/comments", name="admin_comment_index")
+     * @Route("/admin/comments/{pages<\d+>?1}", name="admin_comment_index")
      */
-    public function index()
+    public function index($pages, Pagination $pagination)
     {
+        $pagination->setClassEntity(Comments::class)
+                   ->setPage($pages)
+                   ->setMax(10)
+                   ;
+
         $repo = $this->getDoctrine()->getRepository(Comments::class);
         $comments = $repo->findAll("comments.createAt", 'ASC');
         return $this->render('admin/comments/index.html.twig', [
-            'comments' => $comments
+            'pagination' => $pagination
         ]);
     }
 

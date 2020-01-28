@@ -1,0 +1,15 @@
+<div wfd-id="228" class="d-flex justify-content-center">
+	<ul class="pagination" wfd-id="229">
+		<li class="page-item {% if page  == 1 %}disabled{% endif %}" wfd-id="236">
+			<a class="page-link" href="{{ path(link, {'pages': page -1}) }}">&laquo;</a>
+		</li>
+		{% for p in 1..pages %}
+			<li class="page-item {% if page == p %} active{% endif %}" wfd-id="235">
+				<a class="page-link" href="{{ path(link, {'pages': p}) }}">{{ p }}</a>
+			</li>
+		{% endfor %}
+		<li class="page-item {% if page == pages %} disabled {% endif %}" wfd-id="230">
+			<a class="page-link" href="{{ path(link, {'pages': page + 1}) }}">&raquo;</a>
+		</li>
+	</ul>
+</div>

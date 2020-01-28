@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\Series;
 use App\Form\SerieType;
+use App\Services\Pagination;
 use App\Repository\SeriesRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -13,12 +14,16 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class AdminSerieController extends AbstractController
 {
     /**
-     * @Route("/admin/series", name="admin_series_index")
+     * @Route("/admin/series/{pages<\d+>?1}", name="admin_series_index")
      */
-    public function index(SeriesRepository $repo)
+    public function index(SeriesRepository $repo, $pages, Pagination $pagination)
     {
+        $pagination->setClassEntity(Series::class)
+                   ->setMax(10)
+                   ->setPage($pages);
+
         return $this->render('admin/serie/index.html.twig', [
-            'series' => $repo->findAll()
+            'pagination' => $pagination
         ]);
     }
 

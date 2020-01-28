@@ -3,45 +3,42 @@
 {% endblock %}
 
 {% block body %}
-			
-				<div class="main-body-content w-100 ets-pt">
-					<div class="table-responsive bg-light">
-						<table class="table">
-							<tr>
-								<th>Id</th>
-								<th>Titre</th>
-								<th>Auteur</th>
-								<th>Note</th>
-								<th>Actions</th>
-							</tr>
-							{% for series in series %}
-								<tr>
-									<td>{{ series.id }}</td>
-									<td>{{ series.title }}</td>
-									<td><img src="{{ series.author.avatar }}" 
-                                    alt="Avatar de {{ series.author.Name }}" class="picture picture-mini mr-2">
-                                    {{ series.author.Name }}</td>
-									<td>
-										<div class="stars">
-											<span class="rating">
-												{% include "shared/rate.html.twig" with {'rate': series.getRating} %}
-											</span>
-										</div>
-									</td>
-									<td>
-										<a href="{{ path('admin_series_edit', {'id': series.id}) }}" class="btn btn-primary">
-											<i class="fas fa-edit"></i>
-										</a>
-										<a href="{{ path('admin_series_delete', {'id': series.id}) }}" class="btn btn-danger">
-											<i class="fas fa-trash"></i>
-										</a>
-									</td>
-								</tr>
-							{% endfor %}
-						</table>
-					</div>
-				</div>
-			</div>
-			
 
-{% endblock %}
+	<div class="main-body-content w-100 ets-pt">
+		<div class="table-responsive bg-light">
+			<table class="table">
+				<tr>
+					<th>Id</th>
+					<th>Titre</th>
+					<th>Auteur</th>
+					<th>Note</th>
+					<th>Actions</th>
+				</tr>
+				{% for series in pagination.data %}
+					<tr>
+						<td>{{ series.id }}</td>
+						<td>{{ series.title }}</td>
+						<td><img src="{{ series.author.avatar }}" alt="Avatar de {{ series.author.Name }}" class="picture picture-mini mr-2">
+							{{ series.author.Name }}</td>
+						<td>
+							<div class="stars">
+								<span class="rating">
+									{% include "shared/rate.html.twig" with {'rate': series.getRating} %}
+								</span>
+							</div>
+						</td>
+						<td>
+							<a href="{{ path('admin_series_edit', {'id': series.id}) }}" class="btn btn-primary">
+								<i class="fas fa-edit"></i>
+							</a>
+							<a href="{{ path('admin_series_delete', {'id': series.id}) }}" class="btn btn-danger">
+								<i class="fas fa-trash"></i>
+							</a>
+						</td>
+					</tr>
+				{% endfor %}
+			</table>
+			{{ pagination.display() }}
+		</div>
+	</div>
+</div>{% endblock %}
