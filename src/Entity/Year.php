@@ -12,6 +12,12 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Year
 {
+
+    public function __toString()
+    {
+        return $this->date;
+    }
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()

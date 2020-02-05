@@ -22,23 +22,23 @@
 										<div class="left_section">
 											<div class="social">
 												<a class="icons-sm fb-ic">
-													<i class="fa fa-facebook"></i>
+													<i class="fab fa-facebook-f"></i>
 												</a>
 												<!--Twitter-->
 												<a class="icons-sm tw-ic">
-													<i class="fa fa-twitter"></i>
+													<i class="fab fa-twitter"></i>
 												</a>
 												<!--Google +-->
 												<a class="icons-sm inst-ic">
-													<i class="fa fa-instagram"></i>
+													<i class="fab fa-instagram"></i>
 												</a>
 												<!--Linkedin-->
 												<a class="icons-sm tmb-ic">
-													<i class="fa fa-linkedin"></i>
+													<i class="fab fa-linkedin-in"></i>
 												</a>
 												<!--Pinterest-->
 												<a class="icons-sm rss-ic">
-													<i class="fa fa-rss"></i>
+													<i class="fas fa-rss"></i>
 												</a>
 											</div>
 											<!-- Top Social Section -->
@@ -54,7 +54,7 @@
 																														                                    <!-- Logo Section -->
 									</div>
 									<div class="col-md-4">
-										<div class="right_section">
+										<div class="right_section red-menu">
 											<ul class="nav navbar-nav">
 												{% if app.user %}
 													<li class="dropdown">
@@ -65,30 +65,19 @@
 														</a>
 
 														<ul class="dropdown-menu accmenu">
-														     
-															<li class="dropdown-second">
-																<a href="#" class="nav-link dropdown-toggle"
-																 data-toggle="dropdown">Ajouter
-																 <i class="fa fa-angle-down"></i></a>
-																
-																<ul class="dropdown-menu-second accmenu">
-														        
-																<li><a href="{{ path('films_add') }}">Un film</a></li>
-																<li><a href="{{ path('series_add') }}">Une série</a></li>
-																<li><a href="{{ path('livres_add') }}">Un livre</a></li>
+												
+																<li><a href="{{ path('films_add') }}">Ajouter un film</a></li>
+																<li><a href="{{ path('series_add') }}">Ajouter une série</a></li>
+																<li><a href="{{ path('livres_add') }}">Ajouter un livre</a></li>
 															    	
-																</ul>
-															</li>
-															
-
-															</li>
+													<li class="divider home"></li>
 															<li>
 																<a href="{{ path('account_home') }}">Mon compte</a>
 															</li>
 															<li>
 																<a href="{{ path('account_profile') }}">Modifier mon profile</a>
 															</li>
-															<li class="divider"></li>
+															<li class="divider home"></li>
 															<li>
 																<a href="{{ path('acc_logout') }}">Se déconnecter</a>
 															</li>
@@ -103,24 +92,9 @@
 														</a>
 													</li>
 												{% endif %}
-
+												<li><a  href="{{ path('admin_dash') }}" >/ Admin <i class="fas fa-user-lock"></i></a></li>
 												<!--<li><a href="#">Admin</a></li>-->
 
-												<li class="dropdown lang top-lang">
-													<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Fr
-														<i class="fa fa-angle-down"></i>
-													</button>
-													<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-														<li>
-															<a href="#">EN</a>
-														</li>
-														<li>
-															<a href="#">RU</a>
-														</li>
-													</ul>
-												</li>
-											</ul>
-											<!-- Language Section -->
 
 										</div>
 										<!-- Right Header Section -->
@@ -146,16 +120,16 @@
 										<!-- Collect the nav links, forms, and other content for toggling -->
 										<div class="collapse navbar-collapse" id="#navbar-collapse-1">
 											<ul class="nav navbar-nav main-nav">
-												<li class="active">
+												<li {% if app.request.get('_route') == 'homepage' %} class="active"{% endif %}>
 													<a href="{{ path('homepage') }}">Accueil</a>
 												</li>
-												<li>
+												<li {% if app.request.get('_route') == 'films' %} class="active"{% endif %}>
 													<a href="{{ path('films') }}">Films</a>
 												</li>
-												<li>
+												<li {% if app.request.get('_route') == 'series' %} class="active"{% endif %}>
 													<a href="{{ path('series') }}">Séries</a>
 												</li>
-												<li>
+												<li {% if app.request.get('_route') == 'livres' %} class="active"{% endif %}>
 													<a href="{{ path('livres') }}">Livres</a>
 												</li>
 
@@ -183,59 +157,7 @@
 
 								{% block message %}{% endblock %}
 
-								{% block recherche %}
-									<div class="input-group" id="adv-search">
-										<input type="text" id="main-search" class="form-control" placeholder="Rechercher"/>
-										<div class="input-group-btn">
-											<div class="btn-group" role="group">
-												<div class="dropdown dropdown-lg">
-													<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-														<span class="caret"></span>
-													</button>
-													<div class="dropdown-menu dropdown-menu-right" role="menu">
-														<form class="form-horizontal" role="form">
-															<div class="form-group">
-																<label for="filter">Média</label>
-																<select class="form-control">
-																	<option value="0" selected>Tous</option>
-																	<option value="1">Films</option>
-																	<option value="2">Séries</option>
-																	<option value="3">Livres</option>
-																</select>
-															</div>
-															<div class="form-group">
-																<label for="contain">Editeur/Producteur</label>
-																<input class="form-control" type="text"/>
-															</div>
-															<div class="form-group">
-																<label for="contain">Acteur/Auteur</label>
-																<input class="form-control" type="text"/>
-															</div>
-															<div class="form-group">
-																<label for="contain">Réalisateur</label>
-																<input class="form-control" type="text"/>
-															</div>
-															<div class="form-group">
-																<label for="contain">Année</label>
-																<input class="form-control" type="text"/>
-															</div>
-															<button type="submit" class="btn btn-primary">
-																<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-															</button>
-														</form>
-													</div>
-												</div>
-												<button type="button" class="btn btn-primary">
-													<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-												</button>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</section>
-				{% endblock %}
+								
 
 				{% for label, messages in app.flashes %}
 					<div class="container">

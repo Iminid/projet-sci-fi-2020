@@ -3,6 +3,9 @@
 	Séries
 {% endblock %}
 {% block body %}
+{% include "shared/searchseries.html.twig" %}
+{% block searchSeries %}
+{% endblock %}
 	<div class="container">
 
 		<div class="category_section series">
@@ -12,14 +15,14 @@
 				</h2>
 			</div>
 		</div>
-		<div class="row-flex">
-			{% for serie in series %}
+		<div class="row-flex bottom-series">
+			{% for serie in pagination.data %}
             {% set url = path('series_show', {'slug': serie.slug}) %}
 				<div class="col-md-6 marg">
 					<div class="category_article_body">
 						<div class="top_article_img">
 							<a href="{{ url }}" target="_self">
-								<img class="img-responsive" src="{{ serie.coverImage }}" alt="feature-top">
+								<img class="img-responsive series-index" src="{{ serie.coverImage }}" alt="feature-top">
 							</a>
 						</div>
 						<!-- top_article_img -->
@@ -71,7 +74,9 @@
 				<!-- col-md-6 -->
 			{% endfor %}
 		</div>
-
+		<div class="text-center">
+		{{ pagination.display() }}
+		</div>
 	</div>
 
 {% endblock %}

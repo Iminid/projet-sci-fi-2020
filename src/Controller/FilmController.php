@@ -11,6 +11,8 @@ use App\Form\FilmType;
 use App\Entity\Country;
 use App\Entity\Comments;
 use App\Form\CommentsType;
+use App\Services\Pagination;
+use App\Form\FilmsSearchType;
 use App\Repository\FilmsRepository;
 use App\Repository\SeriesRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -25,51 +27,77 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class FilmController extends AbstractController
 {
-   /*---FILMSPAGE---*/
+    /*---FILMSPAGE---*/
     /**
-     * @Route("/films", name="films")
+     * @Route("/films/{pages<\d+>?1}", name="films")
      */
-    public function index(FilmsRepository $repo)
+    public function index(Request $request, FilmsRepository $filmsRepository, $pages, Pagination $pagination)
     {
         //$repo = $this->getDoctrine()->getRepository(Films::class);
-        $films = $repo->findAll();
+        $pagination->setClassEntity(Films::class)
+            ->setPage($pages);
+
+        $films = [];
+        $search = $this->createForm(FilmsSearchType::class, ["validation_group" => [
+            "search"
+        ]]);
+        if ($search->handleRequest($request)->isSubmitted() && $search->isValid()) {
+            $find = $search->getData();
+            $films = $filmsRepository->filmsSearch($find);
+        }
 
         return $this->render('film/index.html.twig', [
-            'films' => $films
+            'pagination' => $pagination,
+            'films' => $films,
+            'form_search' => $search->createView()
         ]);
     }
 
-     /**
+    /**
      * Ajouter un film
      *
      * @Route("/films/add", name="films_add")
      * @IsGranted("ROLE_USER")
      * @return Response
      */
-    public function create(Request $request, ObjectManager $manager){
+    public function create(Request $request, ObjectManager $manager)
+    {
         $film = new Films();
 
         $form = $this->createForm(FilmType::class, $film);
         $form->handleRequest($request);
 
-        if($form->isSubmitted() && $form->isValid()){
-            foreach($film->getPersons() as $person){
+        //asset('uploads/') ~
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            // Possibilité d'uploader une image
+
+            /*$file = $request->files->get('film')["coverImage"];
+            $uploads_directory = $this->getParameter('uploads_directory');
+            $filename = md5(uniqid()) . '.' . $file->guessExtension();
+            $file->move(
+                $uploads_directory,
+                $filename
+            );
+            $film->setCoverImage($filename);*/
+
+            foreach ($film->getPersons() as $person) {
                 $person->addFilm($film);
                 $manager->persist($person);
             }
-            foreach($film->getAutors() as $autor){
+            foreach ($film->getAutors() as $autor) {
                 $autor->addFilm($film);
                 $manager->persist($autor);
             }
-            foreach($film->getActors() as $actor){
+            foreach ($film->getActors() as $actor) {
                 $actor->addFilm($film);
                 $manager->persist($actor);
             }
-            foreach($film->getCountry() as $country){
+            foreach ($film->getCountry() as $country) {
                 $country->addFilm($film);
                 $manager->persist($country);
             }
-            foreach($film->getYears() as $year){
+            foreach ($film->getYears() as $year) {
                 $year->addFilm($film);
                 $manager->persist($year);
             }
@@ -92,7 +120,7 @@ class FilmController extends AbstractController
             'form' => $form->createView()
         ]);
     }
-    
+
     /**
      * Edition
      *
@@ -101,28 +129,29 @@ class FilmController extends AbstractController
      * 
      * @return Response
      */
-    public function edit(Films $film, Request $request, EntityManagerInterface $manager){
+    public function edit(Films $film, Request $request, EntityManagerInterface $manager)
+    {
         $form = $this->createForm(FilmType::class, $film);
         $form->handleRequest($request);
-        
-        if($form->isSubmitted() && $form->isValid()){
-            foreach($film->getPersons() as $person){
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            foreach ($film->getPersons() as $person) {
                 $person->addFilm($film);
                 $manager->persist($person);
             }
-            foreach($film->getAutors() as $autor){
+            foreach ($film->getAutors() as $autor) {
                 $autor->addFilm($film);
                 $manager->persist($autor);
             }
-            foreach($film->getActors() as $actor){
+            foreach ($film->getActors() as $actor) {
                 $actor->addFilm($film);
                 $manager->persist($actor);
             }
-            foreach($film->getCountry() as $country){
+            foreach ($film->getCountry() as $country) {
                 $country->addFilm($film);
                 $manager->persist($country);
             }
-            foreach($film->getYears() as $year){
+            foreach ($film->getYears() as $year) {
                 $year->addFilm($film);
                 $manager->persist($year);
             }
@@ -155,26 +184,25 @@ class FilmController extends AbstractController
      * @param EntityManagerInterface $manager
      * @return Response
      */
-    public function show($slug, Films $film, Request $request, EntityManagerInterface $manager){
+    public function show($slug, Films $film, Request $request, EntityManagerInterface $manager)
+    {
         $comment = new Comments();
         $form = $this->createForm(CommentsType::class, $comment);
         $form->handleRequest($request);
-        if($form->isSubmitted() && $form->isValid()){
+        if ($form->isSubmitted() && $form->isValid()) {
             $comment->setFilm($film)
-                    ->setAuthor($this->getUser());
-        $manager->persist($comment);
-        $manager->flush();
+                ->setAuthor($this->getUser());
+            $manager->persist($comment);
+            $manager->flush();
 
-        $this->addFlash('success', "Commentaire enregistré !");
+            $this->addFlash('success', "Commentaire enregistré !");
         }
-
         //$film = $repo->findOneBySlug($slug);
 
         return $this->render('film/show.html.twig', [
             'films' => $film,
             'form' => $form->createView()
         ]);
-        
     }
 
     /**
@@ -187,7 +215,8 @@ class FilmController extends AbstractController
      * @param ObjectManager $manager
      * @return Response
      */
-    public function delete(Films $film, ObjectManager $manager){
+    public function delete(Films $film, ObjectManager $manager)
+    {
         $manager->remove($film);
         $manager->flush();
         $this->addFlash(
@@ -197,7 +226,7 @@ class FilmController extends AbstractController
         return $this->redirectToRoute("films");
     }
 
-    
+
     /**
      * Supression d'un commentaire
      * 
@@ -208,7 +237,8 @@ class FilmController extends AbstractController
      * @param ObjectManager $manager
      * @return Response
      */
-    public function deleteComm($slug, Films $film, Comments $comment, ObjectManager $manager){
+    public function deleteComm($slug, Films $film, Comments $comment, ObjectManager $manager)
+    {
         $manager->remove($comment);
         $manager->flush();
         $this->addFlash(
@@ -219,7 +249,4 @@ class FilmController extends AbstractController
             'slug' => $film->getSlug()
         ]);
     }
-
-    
-
 }

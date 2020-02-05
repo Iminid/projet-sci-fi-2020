@@ -4,7 +4,10 @@
 {% endblock %}
 {% block message %}{% endblock %}
 {% block body %}
-	<div class="container">
+{% include "shared/searchfilms.html.twig" %}
+{% block searchFilms %}
+{% endblock %}
+	<div class="container" id="hide">
 		<div class="category_section films">
 			<div class="article_title header_pink">
 				<h2>
@@ -12,13 +15,13 @@
 				</h2>
 			</div>
 			<div class="row-flex">
-				{% for film in films %}
+				{% for film in pagination.data %}
                     {% set url = path('films_show', {'slug': film.slug}) %}
 
 					<div class="col-md-4 marg" id="col-films">
 						<div class="category_article_body">
 							<div class="top_article_img">
-								<a href="{{ url }}" target="_self"><img class="img-responsive" src="{{ film.coverImage }}" alt="feature-top">
+								<a href="{{ url }}" target="_self"><img class="img-responsive film-index" src="{{ film.coverImage }}" alt="feature-top">
 								</a>
 							</div>
 							<!-- top_article_img -->
@@ -70,21 +73,9 @@
 				{% endfor %}
 				
 			</div>
-			<nav aria-label="Page navigation" class="pagination_section">
-                            <ul class="pagination">
-                                <li>
-                                    <a href="#" aria-label="Previous"> <span aria-hidden="true">&laquo;</span> </a>
-                                </li>
-                                <li><a href="#">1</a></li>
-                                <li><a href="#">2</a></li>
-                                <li><a href="#">3</a></li>
-                                <li><a href="#">4</a></li>
-                                <li><a href="#">5</a></li>
-                                <li>
-                                    <a href="#" aria-label="Next" class="active"> <span aria-hidden="true">&raquo;</span> </a>
-                                </li>
-                            </ul>
-                        </nav>
-                        <!-- navigation -->
+			<div class="text-center">
+			{{ pagination.display() }}
+			</div>
 		</div>
+	</div>
 	{% endblock %}

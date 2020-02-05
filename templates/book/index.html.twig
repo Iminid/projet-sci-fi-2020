@@ -4,6 +4,8 @@
 {% endblock %}
 {% block message %}{% endblock %}
 {% block body %}
+	{% include "shared/searchbooks.html.twig" %}
+	{% block searchBooks %}{% endblock %}
 	<div class="container">
 		<div class="row">
 			<div class="category_section livres">
@@ -16,12 +18,12 @@
 
 				<div class="category_article_wrapper">
 					<div class="row-flex">
-						{% for book in books %}
+						{% for book in pagination.data %}
 							{% set url = path('books_show', {'slug': book.slug}) %}
 							<div class="col-md-5">
 								<div class="top_article_img">
 									<a href="{{ url }}" target="_self">
-										<img class="img-responsive middle" src="{{ book.coverImage }}" alt="feature-top">
+										<img class="img-responsive middle book-show" src="{{ book.coverImage }}" alt="feature-top">
 									</a>
 								</div>
 								<!-- top_article_img -->
@@ -76,39 +78,9 @@
 				<!-- category_article_wrapper -->
 
 			</div>
-
-
-			<nav aria-label="Page navigation" class="pagination_section">
-				<ul class="pagination">
-					<li>
-						<a href="#" aria-label="Previous">
-							<span aria-hidden="true">&laquo;</span>
-						</a>
-					</li>
-					<li>
-						<a href="#">1</a>
-					</li>
-					<li>
-						<a href="#">2</a>
-					</li>
-					<li>
-						<a href="#">3</a>
-					</li>
-					<li>
-						<a href="#">4</a>
-					</li>
-					<li>
-						<a href="#">5</a>
-					</li>
-					<li>
-						<a href="#" aria-label="Next" class="active">
-							<span aria-hidden="true">&raquo;</span>
-						</a>
-					</li>
-				</ul>
-			</nav>
-			<!-- navigation -->
-
+			<div class="text-center">
+				{{ pagination.display() }}
+			</div>
 		</div>
 		<!-- row -->
 

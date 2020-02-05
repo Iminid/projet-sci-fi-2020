@@ -36,7 +36,7 @@
 						<!-- entity_title -->
 
 						<div class="entity_thumb">
-							<a href="#"><img class="img-responsive middle" src="{{ films.coverImage }}" alt="feature-top"></a>
+							<a href="#"><img class="img-responsive middle film-show" src="{{ films.coverImage }}" alt="feature-top"></a>
 						</div>
 						<!-- entity_thumb -->
 
@@ -161,8 +161,6 @@
 										{% if app.user and app.user == comment.author %}
 										<div class="entity_vote">
                                                 <a href="{{ path('films_com_delete', {'slug': films.slug}) }}"><i class="fas fa-trash-alt"></i></a>
-                                                <a href="#"><i class="fa fa-thumbs-o-down" aria-hidden="true"></i></a>
-                                                <a href="#"><span class="reply_ic">Répondre </span></a>
                                         </div>
 										{% endif %}
 									</div>
@@ -179,7 +177,7 @@
 						<div class="entity_comments">
 							<h2>Poster un commentaire</h2>
 							<!--Entity Title -->
-
+							{% if  app.user %}
 							{{ form_start(form) }}
 							{{ form_widget(form) }}
 							<button class="submit btn btn-success">Envoyer</button>
@@ -196,6 +194,7 @@
 							</div>
 							<!--Entity Comments From -->
 							<!--LOGIN AND REGISTRY -->
+							{% else %}
 
 							<a class="connec" href="{{ path('acc_register') }}">
 								<p>Pas encore enregistré ?</p>
@@ -203,6 +202,7 @@
 							<a class="connec" href="{{ path('acc_login') }}">
 								<p>Se connecter</p>
 							</a>
+							{% endif %}
 
 						</div>
 						<!--Entity Comments -->

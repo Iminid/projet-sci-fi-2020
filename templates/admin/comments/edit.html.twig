@@ -19,9 +19,27 @@
 							</div>
                     </strong>
 				{% elseif comment.serie %}
-					<strong>{{ comment.serie.title }}</strong>
+					<strong>{{ comment.serie.title }}</strong><br>
+					<strong>Auteur : {{ comment.author.Name }}</strong><br>
+                    <strong>La date : {{ comment.createdAt|date('d/m/Y h:i') }}</strong><br>
+                    <strong>
+                        <div class="stars">
+								<span class="rating">
+									{% include "shared/rate.html.twig" with {'rate': comment.rate} %}
+								</span>
+							</div>
+                    </strong>
 				{% elseif comment.book %}
-					<strong>{{ comment.book.title }}</strong>
+					<strong>{{ comment.book.title }}</strong><br>
+					<strong>Auteur : {{ comment.author.Name }}</strong><br>
+                    <strong>La date : {{ comment.createdAt|date('d/m/Y h:i') }}</strong><br>
+                    <strong>
+                        <div class="stars">
+								<span class="rating">
+									{% include "shared/rate.html.twig" with {'rate': comment.rate} %}
+								</span>
+							</div>
+                    </strong>
 				{% endif %}
 			</div>
 
@@ -34,4 +52,5 @@
 			{{ form_end(form) }}
 		</div>
 	</div>
+	
 {% endblock %}

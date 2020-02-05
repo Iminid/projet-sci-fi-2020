@@ -42,7 +42,7 @@ class AppFixtures extends Fixture
             ->setLastName('Baranov')
             ->setEmail('qklm@hotmail.com')
             ->setHash($this->encoder->encodePassword($userAdmin, 'password'))
-            ->setAvatar('https://randomuser.me/api/portraits/men/86.jpg')
+            ->setAvatar('https://randomuser.me/api/portraits/men/71.jpg')
             ->addUserRole($roleAdmin);
         $manager->persist($userAdmin);
 
@@ -75,8 +75,8 @@ class AppFixtures extends Fixture
             $films = new Films();
 
 
-            $title = $faker->sentence();
-            $coverImage = $faker->imageUrl(350, 200);
+            $title = $faker->sentence($nbWords = 3, $variableNbWords = true);
+            $coverImage = $faker->imageUrl(800, 450);
             $description = '<p>' . join('</p><p>', $faker->paragraphs(5)) . '</p>';
             /*$comment = $faker->paragraph();*/
 
@@ -201,8 +201,8 @@ class AppFixtures extends Fixture
         for ($i = 1; $i <= 30; $i++) {
             $series = new Series();
 
-            $title = $faker->sentence();
-            $coverImage = $faker->imageUrl(525, 295);
+            $title = $faker->sentence($nbWords = 4, $variableNbWords = true);
+            $coverImage = $faker->imageUrl(800, 450);
             $description = '<p>' . join('</p><p>', $faker->paragraphs(5)) . '</p>';
             /*$comment = $faker->paragraph();*/
 
@@ -326,7 +326,7 @@ class AppFixtures extends Fixture
         for ($i = 1; $i <= 30; $i++) {
             $books = new Books();
 
-            $title = $faker->sentence();
+            $title = $faker->sentence($nbWords = 4, $variableNbWords = true);
             $coverImage = $faker->imageUrl(244, 400);
             $description = '<p>' . join('</p><p>', $faker->paragraphs(5)) . '</p>';
             /*$comment = $faker->paragraph();*/

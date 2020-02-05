@@ -19,32 +19,42 @@ class FilmsRepository extends ServiceEntityRepository
         parent::__construct($registry, Films::class);
     }
 
-    // /**
-    //  * @return Films[] Returns an array of Films objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
+    public function findRecentFilms($max){
         return $this->createQueryBuilder('f')
-            ->andWhere('f.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('f.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+                    /*->select('f')
+                    ->from('Films', 'f')
+                    ->groupBy('f')*/
+                    ->orderBy('f.id', 'DESC')
+                    ->setMaxResults($max)
+                    ->getQuery()
+                    ->getResult();
     }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?Films
-    {
+    public function filmsSearch($find){
         return $this->createQueryBuilder('f')
-            ->andWhere('f.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
+                    //Recherche par titre
+                    ->andWhere('f.title like :title')
+                    ->setParameter('title', '%'.$find['title'].'%')
+                    //Recherche par prénom d'acteur
+                    ->select('f', 'a')
+                    ->leftJoin('f.actors', 'ap')
+                    ->andWhere('ap.firstname like :firstname')
+                    ->setParameter('firstname', '%'.$find['firstname'].'%')
+                    //Recherche par nom d'acteur
+                    ->select('f', 'a')
+                    ->leftJoin('f.actors', 'a')
+                    ->andWhere('a.lastname like :lastname')
+                    ->setParameter('lastname', '%'.$find['lastname'].'%')
+                    //Recherche par année
+                    ->select('f', 'y')
+                    ->leftJoin('f.years', 'y')
+                    ->andWhere('y.date like :years')
+                    ->setParameter('years', '%'.$find['years'].'%')
+                    
+                    ->orderBy('f.id', 'ASC')
+                    ->getQuery()
+                    ->getResult()
         ;
     }
-    */
+
 }

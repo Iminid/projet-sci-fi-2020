@@ -17,6 +17,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\CountryType as TypeCountryType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 
 class FilmType extends AppType
 {
@@ -30,6 +31,10 @@ class FilmType extends AppType
             ]))
             ->add('description', TextareaType::class, $this->getConfig('Description du film', 'Ajouter la description du film'))
             ->add('coverImage', UrlType::class, $this->getConfig('Le lien vers URL de l\'image', 'Ajouter l\'adresse de l\'image'))
+            /*->add('coverImage', FileType::class,[
+                'data_class' => null
+            ], 
+            $this->getConfig('Le lien vers URL de l\'image', 'Ajouter l\'adresse de l\'image'))*/
             ->add('persons', CollectionType::class, [
                 'label' => false,
                 'entry_type' => PersonType::class,

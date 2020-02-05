@@ -6,6 +6,8 @@ use App\Entity\Books;
 use App\Form\BookType;
 use App\Entity\Comments;
 use App\Form\CommentsType;
+use App\Services\Pagination;
+use App\Form\BooksSearchType;
 use App\Repository\BooksRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,16 +21,24 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class BookController extends AbstractController
 {
     /**
-     * @Route("/livres", name="livres")
+     * @Route("/livres/{pages<\d+>?1}", name="livres")
      */
-    public function index(BooksRepository $repo)
+    public function index(Request $request,$pages, Pagination $pagination, BooksRepository $booksRepository)
     {
-        $repo = $this->getDoctrine()->getRepository(Books::class);
+        $pagination->setClassEntity(Books::class)
+        ->setPage($pages);
 
-        $books = $repo->findAll();
+        $books = [];
+        $search = $this->createForm(BooksSearchType::class);
+        if($search->handleRequest($request)->isSubmitted() && $search->isValid()){
+            $find = $search->getData();
+            $books= $booksRepository->booksSearch($find); 
+        }
 
         return $this->render('book/index.html.twig', [
-            'books' => $books
+            'pagination' => $pagination,
+            'books' => $books,
+            'form_search' => $search->createView()
         ]);
     }
 

@@ -1,0 +1,43 @@
+{% extends "admin/base.html.twig" %}
+{% block title %}Users
+{% endblock %}
+
+{% block body %}
+
+	<div class="main-body-content w-100 ets-pt">
+    <h1 class="ml-3">Administration des utilisateurs</h1>
+		<div class="table-responsive bg-light">
+			<table class="table">
+				<tr>
+					<th>Id</th>
+					<th>Avatar</th>
+					<th>Prénom</th>
+					<th>Nom</th>
+					<th>Actions</th>
+				</tr>
+				{% for user in pagination.data %}
+					<tr>
+						<td>{{ user.id }}</td>
+						<td><img src="{{ user.avatar }}" alt="Avatar de {{ user.Name }}" class="picture picture-mini mr-2"></td>
+						<td>{{ user.firstName }}</td>
+						<td>{{ user.lastName }}</td>
+						<td>
+							{#<a href="{{ path('admin_films_edit', {'id': films.id}) }}" class="btn btn-primary">
+								<i class="fas fa-edit"></i>
+							</a>#}
+							<a href="{{ path('admin_users_delete', {'id': user.id}) }}" class="btn btn-danger">
+								<i class="fas fa-trash"></i>
+							</a>
+                            <a href="{{ path('admin_users_setrole', {'id': user.id}) }}" class="btn btn-success">
+								<i class="fas fa-user-lock"></i>
+							</a>
+						</td>
+					</tr>
+				{% endfor %}
+			</table>
+			
+			{{ pagination.display() }}
+
+		</div>
+	</div>
+</div>{% endblock %}

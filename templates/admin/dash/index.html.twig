@@ -1,0 +1,214 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Dashboard
+{% endblock %}
+
+{% block body %}
+
+	<div class="main-body-content w-100 ets-pt">
+		<div class="jumbotron">
+			<div class="row w-100">
+				<div class="col-md">
+					<div class="card border-success mx-sm-1 p-3">
+						<div class="card border-success shadow text-success p-3 my-card">
+							<span class="fas fa-users text-success" aria-hidden="true"></span>
+						</div>
+						<div class="text-center mt-3">
+							<h4 class="text-success">Utilisateurs</h4>
+						</div>
+						<div class="text-center mt-2">
+							<h1 class="text-success">{{ items.users }}</h1>
+						</div>
+					</div>
+				</div>
+				<div class="col-md">
+					<div class="card border-danger mx-sm-1 p-3">
+						<div class="card border-danger shadow text-success p-3 my-card">
+							<span class="fas fa-film text-danger" aria-hidden="true"></span>
+						</div>
+						<div class="text-success text-center mt-3">
+							<h4 class="text-danger">Films</h4>
+						</div>
+						<div class="text-center mt-2">
+							<h1 class="text-danger">{{ items.films }}</h1>
+						</div>
+					</div>
+				</div>
+				<div class="col-md">
+					<div class="card border-info mx-sm-1 p-3">
+						<div class="card border-info shadow text-danger p-3 my-card">
+							<span class="fas fa-video text-info" aria-hidden="true"></span>
+						</div>
+						<div class="text-center mt-3">
+							<h4 class="text-info">Séries</h4>
+						</div>
+						<div class="text-center mt-2">
+							<h1 class="text-info">{{ items.series }}</h1>
+						</div>
+					</div>
+				</div>
+				<div class="col-md">
+					<div class="card border-warning mx-sm-1 p-3">
+						<div class="card border-warning shadow text-warning p-3 my-card">
+							<span class="fas fa-book-open" aria-hidden="true"></span>
+						</div>
+						<div class="text-center mt-3">
+							<h4 class="text-warning">Livres</h4>
+						</div>
+						<div class="text-center mt-2">
+							<h1 class="text-warning">{{ items.books }}</h1>
+						</div>
+					</div>
+				</div>
+				<div class="col-md">
+					<div class="card border-secondary mx-sm-1 p-3">
+						<div class="card border-secondary shadow  p-3 my-card">
+							<span class="fas fa-comments text-secondary" aria-hidden="true"></span>
+						</div>
+						<div class="text-center mt-3">
+							<h4 class="text-secondary">Commentaires</h4>
+						</div>
+						<div class="text-center mt-2">
+							<h1 class="text-secondary">{{ items.comments }}</h1>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+        
+        <div class="row">
+            <div class="col ml-3">
+                <div class="alert alert-success">
+                    <h2 class="alert-heading my-3">Films rajoutés recemment</h2>
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Titre</th>
+                                <th>Author</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for film in recentFilm %}
+                            <tr>
+                                <td>{{ film.title }}</td>
+                                <td>
+                                    <img src="{{ film.author.avatar }}" alt="" class="picture picture-mini mr-2">
+                                    {{ film.author.firstName }} {{ film.author.lastName }}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col">
+                <div class="alert alert-success">
+                    <h2 class="alert-heading my-3">Séries rajoutés recemment</h2>
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Titre</th>
+                                <th>Author</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for serie in recentSerie %}
+                            <tr>
+                                <td>{{ serie.title }}</td>
+                                <td>
+                                    <img src="{{ serie.author.avatar }}" alt="" class="picture picture-mini mr-2">
+                                    {{serie.author.firstName }} {{ serie.author.lastName }}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col">
+                <div class="alert alert-success">
+                    <h2 class="alert-heading my-3">Livres rajoutés recemment</h2>
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Titre</th>
+                                <th>Author</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for book in recentBook %}
+                            <tr>
+                                <td>{{ book.title }}</td>
+                                <td>
+                                    <img src="{{ book.author.avatar }}" alt="" class="picture picture-mini mr-2">
+                                    {{book.author.firstName }} {{ book.author.lastName }}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col ml-3">
+                <div class="alert alert-success">
+                    <h2 class="alert-heading my-3">Commentaires ajoutés recemment</h2>
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Author</th>
+                                <th>Commentaire</th>
+                                <th>Note</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for comment in recentComment %}
+                                <tr>
+                                    <td>
+                                        <img src="{{ comment.author.avatar }}" alt="" class="picture picture-mini mr-2">
+                                    {{comment.author.firstName }} {{ comment.author.lastName }}
+                                    </td>
+                                    <td>{{ comment.content }}</td>
+                                    <td>{% include "shared/rate.html.twig" with {'rate': comment.getRate} %}</td>
+                                    <td>{{ comment.createdAt|date('d/m/Y H:i') }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col">
+                <div class="alert alert-success">
+                    <h2 class="alert-heading my-3">Utilisateurs inscrités recemment</h2>
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Avatar</th>
+                                <th>Prénom</th>
+                                <th>Nom</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for user in recentUser %}
+                                <tr>
+                                    <td>{{ user.id }}</td>
+                                    <td>
+                                        <img src="{{ user.avatar }}" alt="" class="picture picture-mini mr-2">
+                                    </td>
+                                    <td>{{user.firstName }}</td>
+                                    <td>{{ user.lastName }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+	</div>
+
+{% endblock %}

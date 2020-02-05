@@ -1,88 +1,96 @@
 {% block header %}
 
- <body>
-  	<div id="page-container" class="main-admin">
-	  	<nav class="navbar navbar-expand-lg navbar-light bg-light position-fixed w-100">
-		  <a class="navbar-brand" href="#"></a>
-		  <div id="open-menu" class="menu-bar">
-		  	<div class="bars"></div>
-		  </div>
-		  {% if app.user %}
-		    <ul class="navbar-nav ml-auto">
-		      <li class="nav-item dropdown ets-right-0">
-		        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-		          <img src="{{ app.user.avatar }}" class="img-fluid rounded-circle border user-profile">
-		        </a>
-		        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-		          <a class="dropdown-item" href="{{ path('admin_acc_logout') }}">Se déconnecter</a>
-		        </div>
-		      </li>
-		    </ul>
-			{% endif %}
-		</nav>
-		<div class="side-bar">
-					<div class="side-bar-links">
-						<ul class="navbar-nav">
-							<li class="nav-item">
-								<a href="{{ path('homepage') }}" class="nav-links d-block">
-									<i class="fas fa-home pr-2"></i>
-									ACCUEIL</a>
-							</li>
-							<li class="nav-item">
-								<a href="{{ path('films') }}" class="nav-links d-block">
-									<i class="fas fa-film pr-2"></i>
-									FILMS</a>
-							</li>
-							<li class="nav-item">
-								<a href="{{ path('series') }}" class="nav-links d-block">
-									<i class="fas fa-video pr-2"></i>
-									SERIES</a>
-							</li>
-							<li class="nav-item">
-								<a href="{{ path('livres') }}" class="nav-links d-block">
-									<i class="fas fa-book-open pr-2"></i>
-									LIVRES</a>
-							</li>
-						</ul>
-					</div>
-					<div class="side-bar-icons">
-						<!-- <div class="side-bar-logo text-center py-3">
-							  				<img src="" class="img-fluid rounded-circle border bg-secoundry mb-3">
-							  				<h5>Company Name</h5>
-							  			</div> -->
-						<div class="icons d-flex flex-column align-items-center">
-							<a href="{{ path('homepage') }}" class="set-width text-center display-inline-block my-1">
-								<i class="fas fa-home"></i>
+	<body>
+		<div id="page-container" class="main-admin">
+		{% for label, messages in app.flashes %}
+			<div class="container">
+				<div class="alert alert-{{ label }}">
+					{% for message in messages %}
+						<p>{{ message | raw }}</p>
+					{% endfor %}
+				</div>
+			</div>
+		{% endfor %}
+			<nav class="navbar navbar-expand-lg navbar-light bg-light position-fixed w-100">
+				<a class="navbar-brand" href="#"></a>
+				<div id="open-menu" class="menu-bar">
+					<div class="bars"></div>
+				</div>
+				<div class="col-md-4 m-auto">
+					<a href="{{ path('homepage') }}">
+						<p class="logo-mini m-auto">Sci-Fi Finder</p>
+					</a>
+					<!--<div class="logo"<!-- Logo Section -->
+				</div>
+				{% if app.user %}
+					<ul class="navbar-nav ">
+						<li class="nav-item dropdown ets-right-0">
+							<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								<img src="{{ app.user.avatar }}" class="img-fluid rounded-circle border user-profile">
 							</a>
-							<a href="#" class="set-width text-center display-inline-block my-1">
-								<i class="fas fa-chart-line"></i>
-							</a>
-							<a href="{{ path('admin_films_index') }}" class="set-width text-center display-inline-block my-1">
-								<i class="fas fa-film"></i>
-							</a>
-							<a href="{{ path('admin_series_index') }}" class="set-width text-center display-inline-block my-1">
-								<i class="fas fa-video"></i>
-							</a>
-							<a href="{{ path('admin_books_index') }}" class="set-width text-center display-inline-block my-1">
-								<i class="fas fa-book-open"></i>
-							</a>
-							<a href="#" class="set-width text-center display-inline-block my-1">
-								<i class="fas fa-users"></i>
-							</a>
-							<a href="{{ path('admin_comment_index') }}" class="set-width text-center display-inline-block my-1">
-								<i class="fas fa-comments"></i>
-							</a>
-						</div>
+							<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+								<a class="dropdown-item" href="{{ path('admin_acc_logout') }}">Se déconnecter</a>
+							</div>
+						</li>
+					</ul>
+				{% endif %}
+			</nav>
+			<div class="side-bar">
+				<div class="side-bar-links">
+					<ul class="navbar-nav">
+						<li class="nav-item">
+							<a href="{{ path('homepage') }}" class="nav-links d-block">
+								<i class="fas fa-home pr-2"></i>
+								ACCUEIL</a>
+						</li>
+						<li class="nav-item">
+							<a href="{{ path('films') }}" class="nav-links d-block">
+								<i class="fas fa-film pr-2"></i>
+								FILMS</a>
+						</li>
+						<li class="nav-item">
+							<a href="{{ path('series') }}" class="nav-links d-block">
+								<i class="fas fa-video pr-2"></i>
+								SERIES</a>
+						</li>
+						<li class="nav-item">
+							<a href="{{ path('livres') }}" class="nav-links d-block">
+								<i class="fas fa-book-open pr-2"></i>
+								LIVRES</a>
+						</li>
+					</ul>
+				</div>
+				<div
+					class="side-bar-icons">
+					<!-- <div class="side-bar-logo text-center py-3">
+												  				<img src="" class="img-fluid rounded-circle border bg-secoundry mb-3">
+												  				<h5>Company Name</h5>
+												  			</div> -->
+					<div class="icons d-flex flex-column align-items-center">
+						<a href="{{ path('homepage') }}" class="set-width text-center display-inline-block my-1">
+							<i class="fas fa-home"></i>
+						</a>
+						<a href="{{ path('admin_dash') }}" class="set-width text-center display-inline-block my-1">
+							<i class="fas fa-chart-line"></i>
+						</a>
+						<a href="{{ path('admin_films_index') }}" class="set-width text-center display-inline-block my-1">
+							<i class="fas fa-film"></i>
+						</a>
+						<a href="{{ path('admin_series_index') }}" class="set-width text-center display-inline-block my-1">
+							<i class="fas fa-video"></i>
+						</a>
+						<a href="{{ path('admin_books_index') }}" class="set-width text-center display-inline-block my-1">
+							<i class="fas fa-book-open"></i>
+						</a>
+						<a href="{{ path('admin_users_index') }}" class="set-width text-center display-inline-block my-1">
+							<i class="fas fa-users"></i>
+						</a>
+						<a href="{{ path('admin_comment_index') }}" class="set-width text-center display-inline-block my-1">
+							<i class="fas fa-comments"></i>
+						</a>
 					</div>
 				</div>
-				{% endblock %}
-        
-{% for label, messages in app.flashes %}
-	<div class="container">
-		<div class="alert alert-{{ label }}">
-			{% for message in messages %}
-				<p>{{ message | raw }}</p>
-			{% endfor %}
-		</div>
-	</div>
-{% endfor %}
+			</div>
+		{% endblock %}
+
+		

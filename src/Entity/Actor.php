@@ -12,6 +12,10 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Actor
 {
+    public function __toString(): string
+    {
+        return 'actorsname';
+    }
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()

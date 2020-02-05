@@ -19,32 +19,42 @@ class BooksRepository extends ServiceEntityRepository
         parent::__construct($registry, Books::class);
     }
 
-    // /**
-    //  * @return Books[] Returns an array of Books objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
+    public function findRecentBooks($max){
         return $this->createQueryBuilder('b')
-            ->andWhere('b.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('b.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+                    /*->select('f')
+                    ->from('Films', 'f')
+                    ->groupBy('f')*/
+                    ->orderBy('b.id', 'DESC')
+                    ->setMaxResults($max)
+                    ->getQuery()
+                    ->getResult();
     }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?Books
-    {
+    public function booksSearch($find){
         return $this->createQueryBuilder('b')
-            ->andWhere('b.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
+                    //Recherche par titre
+                    ->andWhere('b.title like :title')
+                    ->setParameter('title', '%'.$find['title'].'%')
+                    //Recherche par prénom de l'écrivain
+                    ->select('b', 'wp')
+                    ->leftJoin('b.writers', 'wp')
+                    ->andWhere('wp.firstname like :firstname')
+                    ->setParameter('firstname', '%'.$find['firstname'].'%')
+                    //Recherche par nom d'acteur
+                    ->select('b', 'w')
+                    ->leftJoin('b.writers', 'w')
+                    ->andWhere('w.lastname like :lastname')
+                    ->setParameter('lastname', '%'.$find['lastname'].'%')
+                    //Recherche par année
+                    ->select('b', 'y')
+                    ->leftJoin('b.years', 'y')
+                    ->andWhere('y.date like :years')
+                    ->setParameter('years', '%'.$find['years'].'%')
+                    
+                    ->orderBy('b.id', 'ASC')
+                    ->getQuery()
+                    ->getResult()
         ;
     }
-    */
+   
 }

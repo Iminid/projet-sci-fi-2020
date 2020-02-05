@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
 class Pagination{
     private $manager; //Doctrine
     private $classEntity; //Le nom de l'entité visé
-    private $max = 10; // Le nombre maximum à recupérer
+    private $max = 12; // Le nombre maximum à recupérer
     private $currentPage = 1; //Current Page
     private $link; // Le nom de la route
     private $twig; // Integration twig
@@ -58,7 +58,7 @@ class Pagination{
         $offset = $this->currentPage * $this->max - $this->max;
 
         $repo = $this->manager->getRepository($this->classEntity);
-        $data = $repo->findBy([], [], $this->max, $offset);
+        $data = $repo->findBy([], ['id'=> 'DESC'], $this->max, $offset);
 
         return $data;
     }

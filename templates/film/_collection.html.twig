@@ -131,7 +131,9 @@
 	<div class="form-group" id="block_{{ id }}">
 		<div class="row-flex">
 			<div class="col">
-				{{ form_widget(form.date) }}
+				{{ form_widget(form.date.year) }}
+				{{ form_widget(form.date.month, {'attr': {  'style': 'display:none'}}) }}
+				{{ form_widget(form.date.day, {'attr': {  'style': 'display:none'}}) }}
 			</div>
 			<div class="col-2">
 				<button type="button" data-action="delete" data-target="#block_{{ id }}" class="btn btn-danger">X</button>

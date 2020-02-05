@@ -3,6 +3,8 @@
 {% form_theme form 'serie/_collection.html.twig' %}
 {% block body %}
     <div class="container">
+    <button  class="btn btn-text-info"><a href="{{ path('films_add') }}">Ajouter un film</a></button>
+	<button class="btn btn-text-info"><a href="{{ path('livres_add') }}">Ajouter un livre</a></button> 
         <h1>Ajouter une série dans le catalogue</h1>
 
         {{ form_start(form) }}

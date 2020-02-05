@@ -27,6 +27,7 @@ class Films
      * @ORM\Column(type="string", length=255)
      * @Assert\Length(min=2, max=100, minMessage="Le titre doit faire au moin 2 caractères",
      * maxMessage="Le titre ne doit pas dépasser les 100 caractères !")
+     * @Assert\NotBlank(groups={"search"})
      */
     private $title;
 
@@ -45,7 +46,6 @@ class Films
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank
-     * @Assert\Url()
      */
     private $coverImage;
 
@@ -282,6 +282,11 @@ class Films
         }
 
         return $this;
+    }
+
+    public function __toString(): string
+    {
+        return 'actorsname';
     }
 
     /**

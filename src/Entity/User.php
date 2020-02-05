@@ -64,17 +64,17 @@ class User implements UserInterface
     private $slug;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Films", mappedBy="author")
+     * @ORM\OneToMany(targetEntity="App\Entity\Films", mappedBy="author", cascade={"remove"})
      */
     private $films;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Series", mappedBy="author")
+     * @ORM\OneToMany(targetEntity="App\Entity\Series", mappedBy="author", cascade={"remove"})
      */
     private $series;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Books", mappedBy="author")
+     * @ORM\OneToMany(targetEntity="App\Entity\Books", mappedBy="author", cascade={"remove"})
      */
     private $books;
 
@@ -293,6 +293,14 @@ class User implements UserInterface
         $roles[] = 'ROLE_USER';
         return $roles;
     }
+    public function setRoles(){
+        $roles = $this->userRoles->map(function($role){
+            return $role->setTitle();
+        })->toArray();
+        $roles[] = 'ROLE_ADMIN';
+        return $roles;
+    }
+
 
     public function getPassword(){
         return $this->hash;

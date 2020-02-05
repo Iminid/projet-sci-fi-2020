@@ -192,3 +192,24 @@ $(document).ready(function(){
     });
 });
 
+/*Menu current*/
+
+/*Recherche*/
+/*$(document).ready(function(){
+    $("#hide-search").on('click', function(){
+        $("#hide").hide();
+    })
+});*/
+
+$("#search-hide").hide();
+$("#up").hide();
+$( "#down" ).on('click', function() {
+    $("#search-hide").show(600);
+    $("#up").show(100);
+    $("#down").hide(100);
+  });
+$("#up").on('click', function(){
+    $("#search-hide").hide(600);
+    $("#up").hide(100);
+    $("#down").show(100);
+})

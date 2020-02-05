@@ -7,6 +7,9 @@ use App\Entity\Series;
 use App\Form\SerieType;
 use App\Entity\Comments;
 use App\Form\CommentsType;
+use App\Services\Pagination;
+use App\Form\SeriesSearchType;
+use App\Repository\FilmsRepository;
 use App\Repository\SeriesRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,17 +23,27 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class SerieController extends AbstractController
 {
     /**
-     * @Route("/series", name="series")
+     * @Route("/series/{pages<\d+>?1}", name="series")
      */
-    public function index(SeriesRepository $repo)
+    public function index(Request $request, $pages, Pagination $pagination, SeriesRepository $seriesRepository)
     {
-        $series = $repo->findAll();
+        $pagination->setClassEntity(Series::class)
+            ->setPage($pages);
+
+        $series = [];
+        $search = $this->createForm(SeriesSearchType::class);
+        if ($search->handleRequest($request)->isSubmitted() && $search->isValid()) {
+            $find = $search->getData();
+            $series = $seriesRepository->seriesSearch($find);
+        }
 
         return $this->render('serie/index.html.twig', [
-            'series' => $series
+            'pagination' => $pagination,
+            'series' => $series,
+            'form_search' => $search->createView()
         ]);
     }
-    
+
     /**
      * Ajouter une série
      *
@@ -39,30 +52,31 @@ class SerieController extends AbstractController
      * 
      * @return Response
      */
-    public function create(Request $request, ObjectManager $manager){
+    public function create(Request $request, ObjectManager $manager)
+    {
         $serie = new Series();
-        
+
         $form = $this->createForm(SerieType::class, $serie);
         $form->handleRequest($request);
 
-        if($form->isSubmitted() && $form->isValid()){
-            foreach($serie->getPersons() as $person){
+        if ($form->isSubmitted() && $form->isValid()) {
+            foreach ($serie->getPersons() as $person) {
                 $person->addSeries($serie);
                 $manager->persist($person);
             }
-            foreach($serie->getAutors() as $autor){
+            foreach ($serie->getAutors() as $autor) {
                 $autor->addSeries($serie);
                 $manager->persist($autor);
             }
-            foreach($serie->getActors() as $actor){
+            foreach ($serie->getActors() as $actor) {
                 $actor->addSeries($serie);
                 $manager->persist($actor);
             }
-            foreach($serie->getCountry() as $country){
+            foreach ($serie->getCountry() as $country) {
                 $country->addSeries($serie);
                 $manager->persist($country);
             }
-            foreach($serie->getYears() as $year){
+            foreach ($serie->getYears() as $year) {
                 $year->addSeries($serie);
                 $manager->persist($year);
             }
@@ -86,7 +100,7 @@ class SerieController extends AbstractController
             'form' => $form->createView()
         ]);
     }
-    
+
     /**
      * Edition
      *
@@ -95,28 +109,29 @@ class SerieController extends AbstractController
      * 
      * @return Response
      */
-    public function edit(Series $serie, Request $request, EntityManagerInterface $manager){
+    public function edit(Series $serie, Request $request, EntityManagerInterface $manager)
+    {
         $form = $this->createForm(SerieType::class, $serie);
         $form->handleRequest($request);
 
-        if($form->isSubmitted() && $form->isValid()){
-            foreach($serie->getPersons() as $person){
+        if ($form->isSubmitted() && $form->isValid()) {
+            foreach ($serie->getPersons() as $person) {
                 $person->addSeries($serie);
                 $manager->persist($person);
             }
-            foreach($serie->getAutors() as $autor){
+            foreach ($serie->getAutors() as $autor) {
                 $autor->addSeries($serie);
                 $manager->persist($autor);
             }
-            foreach($serie->getActors() as $actor){
+            foreach ($serie->getActors() as $actor) {
                 $actor->addSeries($serie);
                 $manager->persist($actor);
             }
-            foreach($serie->getCountry() as $country){
+            foreach ($serie->getCountry() as $country) {
                 $country->addSeries($serie);
                 $manager->persist($country);
             }
-            foreach($serie->getYears() as $year){
+            foreach ($serie->getYears() as $year) {
                 $year->addSeries($serie);
                 $manager->persist($year);
             }
@@ -146,17 +161,18 @@ class SerieController extends AbstractController
      * 
      * @return Response
      */
-    public function show(Series $serie, Request $request, EntityManagerInterface $manager){
+    public function show(Series $serie, Request $request, EntityManagerInterface $manager)
+    {
         $comment = new Comments();
         $form = $this->createForm(CommentsType::class, $comment);
         $form->handleRequest($request);
-        if($form->isSubmitted() && $form->isValid()){
+        if ($form->isSubmitted() && $form->isValid()) {
             $comment->setSerie($serie)
-                    ->setAuthor($this->getUser());
-        $manager->persist($comment);
-        $manager->flush();
+                ->setAuthor($this->getUser());
+            $manager->persist($comment);
+            $manager->flush();
 
-        $this->addFlash('success', "Commentaire enregistré !");
+            $this->addFlash('success', "Commentaire enregistré !");
         }
 
         return $this->render('serie/show.html.twig', [
@@ -175,7 +191,8 @@ class SerieController extends AbstractController
      * @param ObjectManager $manager
      * @return Response
      */
-    public function delete(Series $serie, ObjectManager $manager){
+    public function delete(Series $serie, ObjectManager $manager)
+    {
         $manager->remove($serie);
         $manager->flush();
         $this->addFlash(

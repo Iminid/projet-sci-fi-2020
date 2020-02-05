@@ -39,6 +39,7 @@ class Autor
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Films", mappedBy="autors")
+     * @ORM\JoinColumn(nullable=true)
      */
     private $films;
 

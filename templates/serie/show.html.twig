@@ -35,7 +35,7 @@
 						<!-- entity_title -->
 
 						<div class="entity_thumb">
-							<a href="#"><img class="img-responsive middle" src="{{ serie.coverImage }}" alt="feature-top"></a>
+							<a href="#"><img class="img-responsive middle film-show" src="{{ serie.coverImage }}" alt="feature-top"></a>
 						</div>
 						<!-- entity_thumb -->
 
@@ -165,7 +165,7 @@
 					<div class="entity_comments">
 						<h2>Poster un commentaire</h2>
 						<!--Entity Title -->
-
+						{% if  app.user %}
 						{{ form_start(form) }}
 							{{ form_widget(form) }}
 							<button class="submit btn btn-success">Envoyer</button>
@@ -182,14 +182,14 @@
 						</div>
 						<!--Entity Comments From -->
 						<!--LOGIN AND REGISTRY -->
-
+						{% else %}
 						<a class="connec" href="{{ path('acc_register') }}">
 							<p>Pas encore enregistré ?</p>
 						</a>
 						<a class="connec" href="{{ path('acc_login') }}">
 							<p>Se connecter</p>
 						</a>
-
+						{% endif %}
 					</div>
 					<!--Entity Comments -->
 

@@ -4,9 +4,10 @@
 	<head>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta
-		name="viewport" content="width=device-width, initial-scale=1">
-		<title>Se connecter{% block title %}{% endblock %}</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Se connecter
+			{% block title %}{% endblock %}
+		</title>
 
 		<!-- favicon -->
 		<link
@@ -33,21 +34,21 @@
 		<link
 		href="/css/owl.theme.default.min.css" rel="stylesheet">
 		<!-- Theme Style -->
-		<link href="/css/style.css" rel="stylesheet">
 		<link href="/css/sign.style.css" rel="stylesheet">
+
 
 	</head>
 
 	{% block body %}
-	{% for label, messages in app.flashes %}
-					<div class="container">
-						<div class="alert alert-{{ label }}">
-							{% for message in messages %}
-								<p>{{ message | raw }}</p>
-							{% endfor %}
-						</div>
-					</div>
-				{% endfor %}
+		{% for label, messages in app.flashes %}
+			<div class="container">
+				<div class="alert alert-{{ label }}">
+					{% for message in messages %}
+						<p>{{ message | raw }}</p>
+					{% endfor %}
+				</div>
+			</div>
+		{% endfor %}
 
 		<div class="container">
 			<div class="row">
@@ -55,31 +56,25 @@
 					<div class="wrap">
 						<p class="form-title">
 							Se connecter</p>
-                        {% if hasError %}
-                            <div class="alert alert-danger">Email ou mot de passe invalide !</div>
-                        {% endif %}
+						{% if hasError %}
+							<div class="alert alert-danger">Email ou mot de passe invalide !</div>
+						{% endif %}
 						<form class="login" action="{{ path('acc_login') }}" method="post">
-							<input type="text" name="_username" id="email" placeholder="E-mail" required value="{{ user }}" />
+							<input type="text" name="_username" id="email" placeholder="E-mail" required value="{{ user }}"/>
 							<input type="password" name="_password" id="password" placeholder="Mot de passe" required/>
 							<input type="submit" value="Connexion" class="btn btn-info btn-sm"/>
 							<div class="remember-forgot">
 								<div class="row">
-									<div class="col-md-6">
-										<div class="checkbox">
-											<label>
-												<input type="checkbox"/>
-												Se souvenir de moi
-											</label>
-										</div>
+									<div class="col-md-8 ">
+										<a href="{{ path('acc_register') }}">
+											<p>Pas encore enregistré ?</p>
+										</a>
 									</div>
 									<div class="col-md-6 forgot-pass-content">
-										<a href="javascription:void(0)" class="forgot-pass">Mot de passe oublié ?</a>
+										<a href="{{ path('homepage') }}" class="forgot-pass">Retour sur la page d'accueil</a>
 									</div>
 								</div>
 							</div>
-							<a href="{{ path('acc_register') }}">
-								<p>Pas encore enregistré ?</p>
-							</a>
 						</form>
 					</div>
 				</div>
